@@ -12,46 +12,6 @@
 					<input type="text" class="form-control" name="name" id="name"  placeholder="请输入菜名" />
 				</div>
 				<div class="form-group">
-					<label for="goodTypeId">菜品类型ID:</label>
-					<input type="text" class="form-control" name="goodTypeId" id="goodTypeId"  placeholder="请输入菜品类型ID" />
-				</div>
-				<div class="form-group">
-					<label for="goodTypeName">菜品类型名字:</label>
-					<input type="text" class="form-control" name="goodTypeName" id="goodTypeName"  placeholder="请输入菜品类型名字" />
-				</div>
-				<div class="form-group">
-					<label for="price">价格:</label>
-					<input type="text" class="form-control" name="price" id="price"  placeholder="请输入价格" />
-				</div>
-				<div class="form-group">
-					<label for="sels">销量:</label>
-					<input type="text" class="form-control" name="sels" id="sels"  placeholder="请输入销量" />
-				</div>
-				<div class="form-group">
-					<label for="imageUrl">图片地址:</label>
-					<input type="text" class="form-control" name="imageUrl" id="imageUrl"  placeholder="请输入图片地址" />
-				</div>
-				<div class="form-group">
-					<label for="createTime">创建时间:</label>
-					<input type="text" class="form-control" name="createTime" id="createTime"  placeholder="请输入创建时间" />
-				</div>
-				<div class="form-group">
-					<label for="createUser">创建人:</label>
-					<input type="text" class="form-control" name="createUser" id="createUser"  placeholder="请输入创建人" />
-				</div>
-				<div class="form-group">
-					<label for="createUserId">创建人ID:</label>
-					<input type="text" class="form-control" name="createUserId" id="createUserId"  placeholder="请输入创建人ID" />
-				</div>
-				<div class="form-group">
-					<label for="preferentialPrice">优惠价格:</label>
-					<input type="text" class="form-control" name="preferentialPrice" id="preferentialPrice"  placeholder="请输入优惠价格" />
-				</div>
-				<div class="form-group">
-					<label for="isPreferential">是否优惠（1：是；2：否）:</label>
-					<input type="text" class="form-control" name="isPreferential" id="isPreferential"  placeholder="请输入是否优惠（1：是；2：否）" />
-				</div>
-				<div class="form-group">
 					<button type="button" id="queryBtn" onclick="doQuery();" class="btn btn-primary">查询</button>
 				</div>
 			</form>
@@ -141,13 +101,6 @@
 					sortable : true
 				},
 				{
-					field : 'goodTypeId',
-					title : '菜品类型ID',
-					align : 'center',
-					valign : 'middle',
-					sortable : true
-				},
-				{
 					field : 'goodTypeName',
 					title : '菜品类型名字',
 					align : 'center',
@@ -169,13 +122,6 @@
 					sortable : true
 				},
 				{
-					field : 'imageUrl',
-					title : '图片地址',
-					align : 'center',
-					valign : 'middle',
-					sortable : true
-				},
-				{
 					field : 'createTime',
 					title : '创建时间',
 					align : 'center',
@@ -185,13 +131,6 @@
 				{
 					field : 'createUser',
 					title : '创建人',
-					align : 'center',
-					valign : 'middle',
-					sortable : true
-				},
-				{
-					field : 'createUserId',
-					title : '创建人ID',
 					align : 'center',
 					valign : 'middle',
 					sortable : true
@@ -209,7 +148,7 @@
 					align : 'center',
 					valign : 'middle',
 					sortable : true
-				},
+				}
 			]
 			});
 		}
