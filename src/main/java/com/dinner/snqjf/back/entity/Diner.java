@@ -1,5 +1,6 @@
 package com.dinner.snqjf.back.entity;
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  *@author linzf
@@ -20,7 +21,7 @@ public class Diner {
 	//图片地址 
 	private String imageUrl;
 	//创建时间 
-	private Timestamp createTime;
+	private Date createTime;
 	//创建人 
 	private String createUser;
 	//创建人ID 
@@ -86,11 +87,11 @@ public class Diner {
 		this.imageUrl = imageUrl;
 	}
 
-	public Timestamp getCreateTime() {
+	public Date getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(Timestamp createTime) {
+	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
 
