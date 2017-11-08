@@ -1,0 +1,171 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<body>
+<form id="dinerForm"  role="form" method="post" action="diner/update">
+		<input type="hidden" name="id" id="id" th:value="${entity.id}" />
+	<div class="form-group" >
+		<label for="name">菜名:</label>
+		<input type="text" class="form-control" name="name" id="name" th:value="${entity.name}" placeholder="请输入菜名" />
+	</div>
+	<div class="form-group" >
+		<label for="goodTypeId">菜品类型ID:</label>
+		<input type="text" class="form-control" name="goodTypeId" id="goodTypeId" th:value="${entity.goodTypeId}" placeholder="请输入菜品类型ID" />
+	</div>
+	<div class="form-group" >
+		<label for="goodTypeName">菜品类型名字:</label>
+		<input type="text" class="form-control" name="goodTypeName" id="goodTypeName" th:value="${entity.goodTypeName}" placeholder="请输入菜品类型名字" />
+	</div>
+	<div class="form-group" >
+		<label for="price">价格:</label>
+		<input type="text" class="form-control" name="price" id="price" th:value="${entity.price}" placeholder="请输入价格" />
+	</div>
+	<div class="form-group" >
+		<label for="sels">销量:</label>
+		<input type="text" class="form-control" name="sels" id="sels" th:value="${entity.sels}" placeholder="请输入销量" />
+	</div>
+	<div class="form-group" >
+		<label for="imageUrl">图片地址:</label>
+		<input type="text" class="form-control" name="imageUrl" id="imageUrl" th:value="${entity.imageUrl}" placeholder="请输入图片地址" />
+	</div>
+	<div class="form-group" >
+		<label for="createTime">创建时间:</label>
+		<input type="text" class="form-control" name="createTime" id="createTime" th:value="${entity.createTime}" placeholder="请输入创建时间" />
+	</div>
+	<div class="form-group" >
+		<label for="createUser">创建人:</label>
+		<input type="text" class="form-control" name="createUser" id="createUser" th:value="${entity.createUser}" placeholder="请输入创建人" />
+	</div>
+	<div class="form-group" >
+		<label for="createUserId">创建人ID:</label>
+		<input type="text" class="form-control" name="createUserId" id="createUserId" th:value="${entity.createUserId}" placeholder="请输入创建人ID" />
+	</div>
+	<div class="form-group" >
+		<label for="preferentialPrice">优惠价格:</label>
+		<input type="text" class="form-control" name="preferentialPrice" id="preferentialPrice" th:value="${entity.preferentialPrice}" placeholder="请输入优惠价格" />
+	</div>
+	<div class="form-group" >
+		<label for="isPreferential">是否优惠（1：是；2：否）:</label>
+		<input type="text" class="form-control" name="isPreferential" id="isPreferential" th:value="${entity.isPreferential}" placeholder="请输入是否优惠（1：是；2：否）" />
+	</div>
+</form>
+<script th:inline="javascript">
+	<![CDATA[
+	$(function () {
+		$('#dinerForm').bootstrapValidator({
+			message: 'This value is not valid',
+			feedbackIcons: {
+				valid: 'glyphicon glyphicon-ok',
+				invalid: 'glyphicon glyphicon-remove',
+				validating: 'glyphicon glyphicon-refresh'
+			},
+			fields: {
+				name:{
+					message: '菜名验证失败',
+					validators: {
+					notEmpty: {
+						message: '菜名不能为空'
+					}
+				}
+			},
+				goodTypeId:{
+					message: '菜品类型ID验证失败',
+					validators: {
+					notEmpty: {
+						message: '菜品类型ID不能为空'
+					}
+				}
+			},
+				goodTypeName:{
+					message: '菜品类型名字验证失败',
+					validators: {
+					notEmpty: {
+						message: '菜品类型名字不能为空'
+					}
+				}
+			},
+				price:{
+					message: '价格验证失败',
+					validators: {
+					notEmpty: {
+						message: '价格不能为空'
+					}
+				}
+			},
+				sels:{
+					message: '销量验证失败',
+					validators: {
+					notEmpty: {
+						message: '销量不能为空'
+					}
+				}
+			},
+				imageUrl:{
+					message: '图片地址验证失败',
+					validators: {
+					notEmpty: {
+						message: '图片地址不能为空'
+					}
+				}
+			},
+				createTime:{
+					message: '创建时间验证失败',
+					validators: {
+					notEmpty: {
+						message: '创建时间不能为空'
+					}
+				}
+			},
+				createUser:{
+					message: '创建人验证失败',
+					validators: {
+					notEmpty: {
+						message: '创建人不能为空'
+					}
+				}
+			},
+				createUserId:{
+					message: '创建人ID验证失败',
+					validators: {
+					notEmpty: {
+						message: '创建人ID不能为空'
+					}
+				}
+			},
+				preferentialPrice:{
+					message: '优惠价格验证失败',
+					validators: {
+					notEmpty: {
+						message: '优惠价格不能为空'
+					}
+				}
+			},
+				isPreferential:{
+					message: '是否优惠（1：是；2：否）验证失败',
+					validators: {
+					notEmpty: {
+						message: '是否优惠（1：是；2：否）不能为空'
+					}
+				}
+			},
+			}
+		})
+		$("#btnOk",window.top.document).click(function() {
+			var bootstrapValidator = $("#dinerForm", window.top.document).data('bootstrapValidator');
+			bootstrapValidator.validate();
+			if(bootstrapValidator.isValid()){
+				$.post($("#dinerForm",window.top.document).attr('action'),$("#dinerForm",window.top.document).serialize(),function(e){
+					if(e.result){
+						$('.modal-dialog', window.top.document).parent('div').remove()
+						$('body', window.top.document).find('.modal-backdrop').remove();
+						$(window.parent.document).contents().find(".tab-pane.fade.active.in iframe")[0].contentWindow.doQuery();
+						window.Ewin.alert({message:'增加数据成功!'});
+					}else{
+						window.Ewin.alert({message:'增加数据失败!'});
+					}
+				 })
+			}
+		 });
+	})
+	]]>
+</script>
+</body>
+</html>

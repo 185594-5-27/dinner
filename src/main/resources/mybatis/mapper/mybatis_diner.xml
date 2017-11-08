@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dinner.snqjf.back.dao.DinerDao">
+	<resultMap type="com.dinner.snqjf.back.entity.Diner" id="DinerMap">
+		<id property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="goodTypeId" column="good_type_id"/>
+		<result property="goodTypeName" column="good_type_name"/>
+		<result property="price" column="price"/>
+		<result property="sels" column="sels"/>
+		<result property="imageUrl" column="image_url"/>
+		<result property="createTime" column="create_time"/>
+		<result property="createUser" column="create_user"/>
+		<result property="createUserId" column="create_user_id"/>
+		<result property="preferentialPrice" column="preferential_price"/>
+		<result property="isPreferential" column="is_preferential"/>
+	</resultMap>
+
+	<!--根据主键获取对象-->
+	<select id="get" parameterType="com.dinner.snqjf.back.entity.Diner" resultMap="DinerMap">
+		SELECT id,name,good_type_id,good_type_name,price,sels,image_url,create_time,create_user,create_user_id,preferential_price,is_preferential FROM t_dinner 
+		WHERE id=#{id}
+	</select>
+
+	<!--保存-->
+	<insert id="save" parameterType="com.dinner.snqjf.back.entity.Diner" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_dinner(name,good_type_id,good_type_name,price,sels,image_url,create_time,create_user,create_user_id,preferential_price,is_preferential)
+		VALUES(#{name},#{goodTypeId},#{goodTypeName},#{price},#{sels},#{imageUrl},#{createTime},#{createUser},#{createUserId},#{preferentialPrice},#{isPreferential})
+	</insert>
+
+	<!--修改-->
+	<update id="update" parameterType="com.dinner.snqjf.back.entity.Diner">
+		UPDATE t_dinner SET name=#{name},good_type_id=#{goodTypeId},good_type_name=#{goodTypeName},price=#{price},sels=#{sels},image_url=#{imageUrl},create_time=#{createTime},create_user=#{createUser},create_user_id=#{createUserId},preferential_price=#{preferentialPrice},is_preferential=#{isPreferential}
+		WHERE id=#{id}
+	</update>
+
+	<!--删除-->
+	<delete id="delete" parameterType="com.dinner.snqjf.back.entity.Diner">
+		 DELETE FROM t_dinner WHERE id=#{id}
+	</delete>
+
+	<!--分页查询-->
+	<select id="findByPage" parameterType="com.dinner.snqjf.back.entity.QueryDiner" resultMap="DinerMap">
+		SELECT id,name,good_type_id,good_type_name,price,sels,image_url,create_time,create_user,create_user_id,preferential_price,is_preferential FROM t_dinner
+		WHERE 1=1
+		<if test="name!=null and name!='' "  >
+		AND name=#{name}
+		</if>
+		<if test="goodTypeId!=null and goodTypeId!='' "  >
+		AND good_type_id=#{goodTypeId}
+		</if>
+		<if test="goodTypeName!=null and goodTypeName!='' "  >
+		AND good_type_name=#{goodTypeName}
+		</if>
+		<if test="price!=null and price!='' "  >
+		AND price=#{price}
+		</if>
+		<if test="sels!=null and sels!='' "  >
+		AND sels=#{sels}
+		</if>
+		<if test="imageUrl!=null and imageUrl!='' "  >
+		AND image_url=#{imageUrl}
+		</if>
+		<if test="createTime!=null and createTime!='' "  >
+		AND create_time=#{createTime}
+		</if>
+		<if test="createUser!=null and createUser!='' "  >
+		AND create_user=#{createUser}
+		</if>
+		<if test="createUserId!=null and createUserId!='' "  >
+		AND create_user_id=#{createUserId}
+		</if>
+		<if test="preferentialPrice!=null and preferentialPrice!='' "  >
+		AND preferential_price=#{preferentialPrice}
+		</if>
+		<if test="isPreferential!=null and isPreferential!='' "  >
+		AND is_preferential=#{isPreferential}
+		</if>
+		<if test="sort!= null">
+		order by ${sort} ${order}
+		</if>
+		limit #{offset},#{limit}
+	</select>
+
+	<!--统计-->
+	<select id="count" parameterType="com.dinner.snqjf.back.entity.QueryDiner" resultType="int">
+		SELECT count(*) FROM t_dinner
+		WHERE 1=1
+		<if test="name!=null and name!='' ">
+		AND name=#{name}
+		</if>
+		<if test="goodTypeId!=null and goodTypeId!='' ">
+		AND good_type_id=#{goodTypeId}
+		</if>
+		<if test="goodTypeName!=null and goodTypeName!='' ">
+		AND good_type_name=#{goodTypeName}
+		</if>
+		<if test="price!=null and price!='' ">
+		AND price=#{price}
+		</if>
+		<if test="sels!=null and sels!='' ">
+		AND sels=#{sels}
+		</if>
+		<if test="imageUrl!=null and imageUrl!='' ">
+		AND image_url=#{imageUrl}
+		</if>
+		<if test="createTime!=null and createTime!='' ">
+		AND create_time=#{createTime}
+		</if>
+		<if test="createUser!=null and createUser!='' ">
+		AND create_user=#{createUser}
+		</if>
+		<if test="createUserId!=null and createUserId!='' ">
+		AND create_user_id=#{createUserId}
+		</if>
+		<if test="preferentialPrice!=null and preferentialPrice!='' ">
+		AND preferential_price=#{preferentialPrice}
+		</if>
+		<if test="isPreferential!=null and isPreferential!='' ">
+		AND is_preferential=#{isPreferential}
+		</if>
+	</select>
+
+	<!--查询-->
+	<select id="query" parameterType="com.dinner.snqjf.back.entity.QueryDiner" resultMap="DinerMap">
+		SELECT id,name,good_type_id,good_type_name,price,sels,image_url,create_time,create_user,create_user_id,preferential_price,is_preferential FROM t_dinner
+		WHERE 1=1
+		<if test="name!=null and name!='' ">
+		AND name=#{name}
+		</if>
+		<if test="goodTypeId!=null and goodTypeId!='' ">
+		AND good_type_id=#{goodTypeId}
+		</if>
+		<if test="goodTypeName!=null and goodTypeName!='' ">
+		AND good_type_name=#{goodTypeName}
+		</if>
+		<if test="price!=null and price!='' ">
+		AND price=#{price}
+		</if>
+		<if test="sels!=null and sels!='' ">
+		AND sels=#{sels}
+		</if>
+		<if test="imageUrl!=null and imageUrl!='' ">
+		AND image_url=#{imageUrl}
+		</if>
+		<if test="createTime!=null and createTime!='' ">
+		AND create_time=#{createTime}
+		</if>
+		<if test="createUser!=null and createUser!='' ">
+		AND create_user=#{createUser}
+		</if>
+		<if test="createUserId!=null and createUserId!='' ">
+		AND create_user_id=#{createUserId}
+		</if>
+		<if test="preferentialPrice!=null and preferentialPrice!='' ">
+		AND preferential_price=#{preferentialPrice}
+		</if>
+		<if test="isPreferential!=null and isPreferential!='' ">
+		AND is_preferential=#{isPreferential}
+		</if>
+		<if test="sort!= null">
+		order by ${sort} ${order}
+		</if>
+	</select>
+</mapper>
