@@ -45,7 +45,7 @@
 					text: '添加',
 					iconCls: 'glyphicon glyphicon-plus',
 					handler: function () {
-						window.Ewin.dialog({title:"添加",url:"diner/addPage",width:400,height:500})
+						window.Ewin.dialog({title:"添加",url:"diner/addPage",width:400,height:600})
 				}
 				},
 				{
@@ -57,7 +57,7 @@
 							window.Ewin.alert({message:'请选择一条需要修改的数据!'});
 							return false;
 						}
-						window.Ewin.dialog({title:"修改",url:"diner/updatePage?id="+rows[0].id,width:400,height:500});
+						window.Ewin.dialog({title:"修改",url:"diner/updatePage?id="+rows[0].id,width:400,height:600});
 				}
 				},
 				{
@@ -126,7 +126,11 @@
 					title : '创建时间',
 					align : 'center',
 					valign : 'middle',
-					sortable : true
+					sortable : true,
+                    formatter: function (value, row, index) {
+                        var dt = new Date(value).format('yyyy-MM-dd hh:mm:ss');
+                        return dt;
+					}
 				},
 				{
 					field : 'createUser',
@@ -144,10 +148,17 @@
 				},
 				{
 					field : 'isPreferential',
-					title : '是否优惠（1：是；2：否）',
+					title : '是否优惠',
 					align : 'center',
 					valign : 'middle',
-					sortable : true
+					sortable : true,
+                    formatter: function (value, row, index) {
+					    if(value=='1'){
+                            return "是";
+						}else{
+					        return "否";
+						}
+                    }
 				}
 			]
 			});

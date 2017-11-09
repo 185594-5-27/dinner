@@ -34,6 +34,12 @@ public class DinerController extends GenericController<Diner, QueryDiner> {
 		return dinerService;
 	}
 
+	/**
+	 * 功能描述：重写保存方法
+	 * @param entity
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public Map<String, Object> save(Diner entity) throws Exception {
 		User user = UserInfo.getUser();
@@ -44,9 +50,21 @@ public class DinerController extends GenericController<Diner, QueryDiner> {
 		foodType.setId(entity.getGoodTypeId());
 		foodType = foodTypeService.get(foodType);
 		entity.setGoodTypeName(foodType.getType());
-
 		return super.save(entity);
 	}
 
-
+	/**
+	 * 功能描述：重写更新方法
+	 * @param entity
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public Map<String, Object> update(Diner entity) throws Exception {
+		FoodType foodType = new FoodType();
+		foodType.setId(entity.getGoodTypeId());
+		foodType = foodTypeService.get(foodType);
+		entity.setGoodTypeName(foodType.getType());
+		return super.update(entity);
+	}
 }

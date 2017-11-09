@@ -30,7 +30,7 @@
 
 	<!--修改-->
 	<update id="update" parameterType="com.dinner.snqjf.back.entity.Diner">
-		UPDATE t_dinner SET name=#{name},good_type_id=#{goodTypeId},good_type_name=#{goodTypeName},price=#{price},sels=#{sels},image_url=#{imageUrl},create_time=#{createTime},create_user=#{createUser},create_user_id=#{createUserId},preferential_price=#{preferentialPrice},is_preferential=#{isPreferential}
+		UPDATE t_dinner SET name=#{name},good_type_id=#{goodTypeId},good_type_name=#{goodTypeName},price=#{price},image_url=#{imageUrl},preferential_price=#{preferentialPrice},is_preferential=#{isPreferential}
 		WHERE id=#{id}
 	</update>
 
