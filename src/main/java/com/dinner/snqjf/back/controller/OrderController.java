@@ -2,6 +2,7 @@ package com.dinner.snqjf.back.controller;
 
 import javax.inject.Inject;
 
+import com.dinner.snqjf.common.base.constant.SystemStaticConst;
 import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,10 @@ import com.dinner.snqjf.back.entity.Order;
 import com.dinner.snqjf.back.entity.QueryOrder;
 import com.dinner.snqjf.back.service.OrderService;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *@author linzf
@@ -25,6 +30,25 @@ public class OrderController extends GenericController<Order, QueryOrder> {
 	@Override
 	protected GenericService<Order, QueryOrder> getService() {
 		return orderService;
+	}
+
+	/**
+	 * 功能描述：实现订单的结账处理
+	 * @param entity
+	 * @return
+	 */
+	@RequestMapping(value = "/checkout",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Map<String,Object> checkout(Order entity){
+		Map<String,Object> result = new HashMap<String, Object>();
+		if(orderService.checkout(entity)){
+			result.put(SystemStaticConst.RESULT,SystemStaticConst.SUCCESS);
+			result.put(SystemStaticConst.MSG,"订单结账成功！");
+		}else{
+			result.put(SystemStaticConst.RESULT,SystemStaticConst.FAIL);
+			result.put(SystemStaticConst.MSG,"订单结账成功！");
+		}
+		return result;
 	}
 
 	/**

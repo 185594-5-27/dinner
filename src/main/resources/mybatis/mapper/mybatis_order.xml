@@ -17,10 +17,10 @@
 		<result property="consumeTime" column="consume_time"/>
 		<result property="score" column="score"/>
 	</resultMap>
-	
+
+	<!-- 实现订单的结账 -->
 	<update id="checkout" parameterType="com.dinner.snqjf.back.entity.Order">
 		update t_order set state=#{state},consume_time=#{consumeTime},consume_user=#{consumeUser},score=#{score} where id = #{state}
-
 	</update>
 
 	<!--根据主键获取对象-->

@@ -69,6 +69,10 @@
                             window.Ewin.alert({message:'请选择一条需要结账的数据!'});
                             return false;
                         }
+                        if(rows[0].state!='1'){
+                            window.Ewin.alert({message:'请选择待付款的订单进行结账!'});
+                            return false;
+						}
                         window.Ewin.confirm({title:'提示',message:'是否要对桌号（'+rows[0].tableNum+'），订单编号（'+rows[0].orderNum+'），消费金额为（'+rows[0].realIncome+'）的订单进行结账？',width:500}).on(function (e) {
                             if (e) {
                                 window.Ewin.dialog({title:"结账",url:"order/toCheckout?id="+rows[0].id,width:400,height:600})
@@ -85,6 +89,10 @@
 							window.Ewin.alert({message:'请选择一条需要取消订单的数据!'});
 							return false;
 						}
+                        if(rows[0].state!='1'){
+                            window.Ewin.alert({message:'请选择待付款的订单进行取消!'});
+                            return false;
+                        }
 						window.Ewin.confirm({title:'提示',message:'是否要取消您所选择的订单记录？',width:500}).on(function (e) {
 						if (e) {
 							$.post("order/removeBath",{json:JSON.stringify(rows)},function(e){

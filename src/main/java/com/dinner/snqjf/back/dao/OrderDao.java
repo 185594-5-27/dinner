@@ -10,5 +10,12 @@ import com.dinner.snqjf.back.entity.QueryOrder;
  **/
 public interface OrderDao extends GenericDao<Order, QueryOrder> {
 
+    /**
+     * 功能描述：实现结账功能
+     * @param entity
+     * @return
+     */
+    public int checkout(Order entity);
+
 	
 }

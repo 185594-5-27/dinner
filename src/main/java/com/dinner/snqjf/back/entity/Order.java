@@ -1,10 +1,19 @@
 package com.dinner.snqjf.back.entity;
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  *@author linzf
  **/
 public class Order {
+
+	// 待付款
+	public static final String STATE_PENDING_PAY = "1";
+	// 已付款
+	public static final String STATE_READY_PAY = "2";
+	// 取消订单
+	public static final String STATE_CANCEL_ORDER = "3";
+
 	//订单流水ID 
 	private int id;
 	//订单编号 
@@ -18,7 +27,7 @@ public class Order {
 	//包间名字 
 	private String privateRoom;
 	//下单时间 
-	private Timestamp orderTime;
+	private Date orderTime;
 	//订单状态（1：待付款；2：已付款；3：订单取消） 
 	private String state;
 	//下单人 
@@ -30,7 +39,7 @@ public class Order {
 	//消费人ID 
 	private int consumeUserId;
 	//消费时间 
-	private Timestamp consumeTime;
+	private Date consumeTime;
 	//产品积分 
 	private int score;
 
@@ -82,11 +91,11 @@ public class Order {
 		this.privateRoom = privateRoom;
 	}
 
-	public Timestamp getOrderTime() {
+	public Date getOrderTime() {
 		return orderTime;
 	}
 
-	public void setOrderTime(Timestamp orderTime) {
+	public void setOrderTime(Date orderTime) {
 		this.orderTime = orderTime;
 	}
 
@@ -130,11 +139,11 @@ public class Order {
 		this.consumeUserId = consumeUserId;
 	}
 
-	public Timestamp getConsumeTime() {
+	public Date getConsumeTime() {
 		return consumeTime;
 	}
 
-	public void setConsumeTime(Timestamp consumeTime) {
+	public void setConsumeTime(Date consumeTime) {
 		this.consumeTime = consumeTime;
 	}
 

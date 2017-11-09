@@ -8730,3 +8730,15 @@ org.thymeleaf.exceptions.TemplateProcessingException: Could not parse as express
 2017-11-09 16:48:58.928 DEBUG 8676 --- [http-nio-8080-exec-9] c.dinner.snqjf.back.dao.OrderDao.count   : ==>  Preparing: SELECT count(*) FROM t_order WHERE 1=1 
 2017-11-09 16:48:58.928 DEBUG 8676 --- [http-nio-8080-exec-9] c.dinner.snqjf.back.dao.OrderDao.count   : ==> Parameters: 
 2017-11-09 16:48:58.929 DEBUG 8676 --- [http-nio-8080-exec-9] c.dinner.snqjf.back.dao.OrderDao.count   : <==      Total: 1
+2017-11-09 16:54:11.609 DEBUG 8676 --- [http-nio-8080-exec-3] c.d.snqjf.back.dao.OrderDao.findByPage   : ==>  Preparing: SELECT id,order_num,order_price,real_income,table_num,private_room,order_time,state,order_user,order_user_id,consume_user,consume_user_id,consume_time,score FROM t_order WHERE 1=1 order by id desc limit ?,? 
+2017-11-09 16:54:11.609 DEBUG 8676 --- [http-nio-8080-exec-3] c.d.snqjf.back.dao.OrderDao.findByPage   : ==> Parameters: 0(Integer), 13(Integer)
+2017-11-09 16:54:11.610 DEBUG 8676 --- [http-nio-8080-exec-3] c.d.snqjf.back.dao.OrderDao.findByPage   : <==      Total: 1
+2017-11-09 16:54:11.611 DEBUG 8676 --- [http-nio-8080-exec-3] c.dinner.snqjf.back.dao.OrderDao.count   : ==>  Preparing: SELECT count(*) FROM t_order WHERE 1=1 
+2017-11-09 16:54:11.611 DEBUG 8676 --- [http-nio-8080-exec-3] c.dinner.snqjf.back.dao.OrderDao.count   : ==> Parameters: 
+2017-11-09 16:54:11.612 DEBUG 8676 --- [http-nio-8080-exec-3] c.dinner.snqjf.back.dao.OrderDao.count   : <==      Total: 1
+2017-11-09 16:54:12.644 DEBUG 8676 --- [http-nio-8080-exec-9] c.d.snqjf.back.dao.OrderDao.findByPage   : ==>  Preparing: SELECT id,order_num,order_price,real_income,table_num,private_room,order_time,state,order_user,order_user_id,consume_user,consume_user_id,consume_time,score FROM t_order WHERE 1=1 order by id desc limit ?,? 
+2017-11-09 16:54:12.644 DEBUG 8676 --- [http-nio-8080-exec-9] c.d.snqjf.back.dao.OrderDao.findByPage   : ==> Parameters: 0(Integer), 13(Integer)
+2017-11-09 16:54:12.646 DEBUG 8676 --- [http-nio-8080-exec-9] c.d.snqjf.back.dao.OrderDao.findByPage   : <==      Total: 1
+2017-11-09 16:54:12.646 DEBUG 8676 --- [http-nio-8080-exec-9] c.dinner.snqjf.back.dao.OrderDao.count   : ==>  Preparing: SELECT count(*) FROM t_order WHERE 1=1 
+2017-11-09 16:54:12.646 DEBUG 8676 --- [http-nio-8080-exec-9] c.dinner.snqjf.back.dao.OrderDao.count   : ==> Parameters: 
+2017-11-09 16:54:12.647 DEBUG 8676 --- [http-nio-8080-exec-9] c.dinner.snqjf.back.dao.OrderDao.count   : <==      Total: 1
