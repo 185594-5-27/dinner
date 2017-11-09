@@ -23,8 +23,23 @@ public class QueryBase {
     }
 
     public void setSort(String sort) {
-        this.sort = sort;
+        String orderSort = "";
+        for( int i = 0 ; i<sort.length(); i++ ){
+            char a = sort.charAt(i);
+            String b = ""+a;
+            if( a>64 && a<91 ){ //大写字母的ASCLL码取值范围
+                if(orderSort.equals("")){
+                    orderSort = orderSort + b.toLowerCase();
+                }else{
+                    orderSort = orderSort + "_" + b.toLowerCase();
+                }
+            }else{
+                orderSort = orderSort + b;
+            }
+        }
+        this.sort = orderSort;
     }
+
 
     public String getOrder() {
         return order;

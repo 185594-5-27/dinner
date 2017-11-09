@@ -2084,6 +2084,10 @@
                 $.each($("#"+formId).find("input"),function(index,info){
                     param[info.name] = info.value;
                 })
+                // 实现对select下拉菜单的查询
+                $.each($("#"+formId).find("select"),function(index,info){
+                    param[info.name] = info.value;
+                })
             }
             if(sortName!=undefined){
                 param.sort = sortName;

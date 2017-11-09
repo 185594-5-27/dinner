@@ -45,6 +45,17 @@ function getDictText(type,code){
     var value = dictValueMap.get(type+"_"+code);
     return value.split("|")[1];
 }
+// 根据type来获取value的值
+function getSelectOption(type,id){
+    var optionHtml = "";
+    for (var i = 0; i < dictValueMap.arr.length; i++) {
+        if (dictValueMap.arr[i].key.indexOf(type)!=-1) {
+            var value = dictValueMap.arr[i].value.split("|");
+            optionHtml = optionHtml + "<option value='"+value[0]+"'>"+value[1]+"</option>";
+        }
+    }
+    $("#"+id).append(optionHtml)
+}
 
 function Map() {
     var struct = function(key, value) {

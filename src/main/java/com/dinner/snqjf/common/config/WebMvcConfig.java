@@ -30,6 +30,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         registry.addViewController("/foodTypeList").setViewName("/back/foodType/foodTypeList");
         // 菜单列表页
         registry.addViewController("/dinerList").setViewName("/back/diner/dinerList");
+        // 订单列表页
+        registry.addViewController("/orderList").setViewName("/back/order/orderList");
 
     }
 
