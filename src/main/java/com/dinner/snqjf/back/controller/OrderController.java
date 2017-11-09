@@ -31,6 +31,24 @@ public class OrderController extends GenericController<Order, QueryOrder> {
 	protected GenericService<Order, QueryOrder> getService() {
 		return orderService;
 	}
+	/**
+	 * 功能描述：实现订单的结账处理
+	 * @param entity
+	 * @return
+	 */
+	@RequestMapping(value = "/cancelOrder",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Map<String,Object> cancelOrder(Order entity){
+		Map<String,Object> result = new HashMap<String, Object>();
+		if(orderService.cancelOrder(entity)){
+			result.put(SystemStaticConst.RESULT,SystemStaticConst.SUCCESS);
+			result.put(SystemStaticConst.MSG,"取消订单成功！");
+		}else{
+			result.put(SystemStaticConst.RESULT,SystemStaticConst.FAIL);
+			result.put(SystemStaticConst.MSG,"取消订单失败！");
+		}
+		return result;
+	}
 
 	/**
 	 * 功能描述：实现订单的结账处理
@@ -46,7 +64,7 @@ public class OrderController extends GenericController<Order, QueryOrder> {
 			result.put(SystemStaticConst.MSG,"订单结账成功！");
 		}else{
 			result.put(SystemStaticConst.RESULT,SystemStaticConst.FAIL);
-			result.put(SystemStaticConst.MSG,"订单结账成功！");
+			result.put(SystemStaticConst.MSG,"订单结账失败！");
 		}
 		return result;
 	}

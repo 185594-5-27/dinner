@@ -53,7 +53,7 @@
             }
         })
         $("#btnOk",window.top.document).click(function() {
-            var bootstrapValidator = $("#orderForm", window.top.document).data('bootstrapValidator');
+            var bootstrapValidator = $("#checkoutForm", window.top.document).data('bootstrapValidator');
             bootstrapValidator.validate();
             if(bootstrapValidator.isValid()){
                 $.post($("#checkoutForm",window.top.document).attr('action'),$("#checkoutForm",window.top.document).serialize(),function(e){

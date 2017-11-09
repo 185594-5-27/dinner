@@ -36,4 +36,15 @@ public class OrderService extends GenericService<Order, QueryOrder> {
 		entity.setState(Order.STATE_READY_PAY);
 		return orderDao.checkout(entity)>0;
 	}
+
+	/**
+	 * 功能描述：实现取消订单功能
+	 * @param entity
+	 * @return
+	 */
+	public boolean cancelOrder(Order entity){
+		entity.setConsumeTime(new Date());
+		entity.setState(Order.STATE_CANCEL_ORDER);
+		return orderDao.cancelOrder(entity)>0;
+	}
 }

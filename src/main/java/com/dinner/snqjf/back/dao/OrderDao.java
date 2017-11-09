@@ -17,5 +17,12 @@ public interface OrderDao extends GenericDao<Order, QueryOrder> {
      */
     public int checkout(Order entity);
 
+    /**
+     * 功能描述：实现取消订单功能
+     * @param entity
+     * @return
+     */
+    public int cancelOrder(Order entity);
+
 	
 }

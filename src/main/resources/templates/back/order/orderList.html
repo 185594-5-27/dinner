@@ -47,6 +47,11 @@
 	function doQuery(){
  		$('#order-table').bootstrapTable('refresh');    //刷新表格
 	}
+	// 消费明细
+	function orderDetail(id){
+        window.Ewin.dialogShow({title:"消费明细",url:"orderDetail/toOrderDetailList",width:900,height:800})
+	}
+
 	function initTable(){
 		$('#order-table').bootstrapTable({
 			url:"order/list",
@@ -73,7 +78,7 @@
                             window.Ewin.alert({message:'请选择待付款的订单进行结账!'});
                             return false;
 						}
-                        window.Ewin.confirm({title:'提示',message:'是否要对桌号（'+rows[0].tableNum+'），订单编号（'+rows[0].orderNum+'），消费金额为（'+rows[0].realIncome+'）的订单进行结账？',width:500}).on(function (e) {
+                        window.Ewin.confirm({title:'提示',message:'是否要对桌号（'+rows[0].tableNum+'），订单编号（'+rows[0].orderNum+'），消费金额为（'+rows[0].orderPrice+'）的订单进行结账？',width:500}).on(function (e) {
                             if (e) {
                                 window.Ewin.dialog({title:"结账",url:"order/toCheckout?id="+rows[0].id,width:400,height:600})
                             }
@@ -95,7 +100,7 @@
                         }
 						window.Ewin.confirm({title:'提示',message:'是否要取消您所选择的订单记录？',width:500}).on(function (e) {
 						if (e) {
-							$.post("order/removeBath",{json:JSON.stringify(rows)},function(e){
+							$.post("order/cancelOrder",{id:rows[0].id},function(e){
 								if(e.result){
 									window.Ewin.alert({message:e.msg});
 									doQuery();
@@ -189,12 +194,12 @@
 				},
 				{
 					field : 'consumeTime',
-					title : '消费时间',
+					title : '消费/取消时间',
 					align : 'center',
 					valign : 'middle',
 					sortable : true,
                     formatter: function (value, row, index) {
-					    if(row.state!='2'){
+					    if(row.state=='2'){
 					        return "";
 						}else{
                             var dt = new Date(value).format('yyyy-MM-dd hh:mm:ss');
@@ -208,7 +213,15 @@
 					align : 'center',
 					valign : 'middle',
 					sortable : true
-				}
+				},{
+                    field : 'operations',
+                    title : '操作',
+                    align : 'center',
+                    valign : 'middle',
+                    formatter: function (value, row, index) {
+                       return '<a href="#" onclick="orderDetail('+row.id+')" >消费明细</a>';
+                    }
+                }
 			]
 			});
 		}

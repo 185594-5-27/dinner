@@ -39,6 +39,24 @@
             '</div>' +
             '</div>' +
             '</div>';
+
+        var dialogShowHtml = '<div id="[Id]" class="modal fade" role="dialog" aria-labelledby="modalLabel" style="margin-top: 10px;">' +
+            '<div class="modal-dialog" >' +
+            '<div class="modal-content" style="'+'width:[Width]px;height:[Height]px'+';">' +
+            '<div class="modal-header">' +
+            '<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>' +
+            '<h4 class="modal-title" id="modalLabel">[Title]</h4>' +
+            '</div>' +
+            '<div class="modal-body" style="height: [ModalHeight]px;overflow-y:auto; ">' +
+            '<iframe style="width:100%;height:100%;border:none;" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes" src="[url]" ></iframe>' +
+            '</div>' +
+            '<div class="modal-footer" >' +
+            '<button type="button" class="btn btn-default cancel" data-dismiss="modal">关闭</button>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>';
+
         var reg = new RegExp("\\[([^\\[\\]]*?)\\]", 'igm');
         var generateId = function () {
             var date = new Date();
@@ -174,6 +192,49 @@
                 $('body').find('.modal-backdrop').removeClass('modal-backdrop');
                 $('body', window.top.document).find('.modal-footer').find('.btn-primary').bind('click',options.onSubmit);
                // alert($('body', window.top.document).find('.modal-footer').html())
+            },
+            dialogShow: function (options) {
+                options = $.extend({}, {
+                    title: 'title',
+                    url: '',
+                    width: 800,
+                    height: 550,
+                    gridId: '',
+                    onReady: function () { },
+                    onShown: function (e) { },
+                    onSubmit:function(){
+                        return false;
+                    }
+                }, options || {});
+                var modalId = generateId();
+                var gridId = options.gridId;
+                options.onSubmit = function(){
+                    return false;
+                }
+
+                var content = dialogShowHtml.replace(reg, function (node, key) {
+                    return {
+                        Id: modalId,
+                        Title: options.title,
+                        Width : options.width,
+                        Height : options.height,
+                        ModalHeight :options.height - 130,
+                        url:options.url
+                    }[key];
+                });
+                $('body', window.top.document).append(content);
+                $('body', window.top.document).append("<div class='modal-backdrop fade in' ></div>");
+                var target = $('#' + modalId, window.top.document);
+                $('#' + modalId, window.top.document).modal({
+                    url: options.url,
+                    backdrop: 'static'
+                });
+                $('#' + modalId, window.top.document).on('hide.bs.modal', function (e) {
+                    $('body', window.top.document).find('.modal-backdrop').remove();
+                    $('body', window.top.document).find('#' + modalId).remove();
+                });
+                $('body').find('.modal-backdrop').removeClass('modal-backdrop');
+                // alert($('body', window.top.document).find('.modal-footer').html())
             }
         }
     }();

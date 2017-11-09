@@ -1,0 +1,15 @@
+[2017-11-09 20:31:52.762] - 600 WARN [restartedMain] --- org.hibernate.validator.messageinterpolation.ParameterMessageInterpolator: HV000184: ParameterMessageInterpolator has been chosen, EL interpolation will not be supported
+[2017-11-09 20:31:53.043] - 600 信息 [restartedMain] --- org.apache.catalina.core.StandardService: Starting service [Tomcat]
+[2017-11-09 20:31:53.044] - 600 信息 [restartedMain] --- org.apache.catalina.core.StandardEngine: Starting Servlet Engine: Apache Tomcat/8.5.20
+[2017-11-09 20:31:53.135] - 600 信息 [localhost-startStop-1] --- org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]: Initializing Spring embedded WebApplicationContext
+[2017-11-09 20:31:53.903] - 600 INFO [restartedMain] --- org.hibernate.jpa.internal.util.LogHelper: HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+[2017-11-09 20:31:53.952] - 600 INFO [restartedMain] --- org.hibernate.Version: HHH000412: Hibernate Core {5.0.12.Final}
+[2017-11-09 20:31:53.955] - 600 INFO [restartedMain] --- org.hibernate.cfg.Environment: HHH000206: hibernate.properties not found
+[2017-11-09 20:31:53.957] - 600 INFO [restartedMain] --- org.hibernate.cfg.Environment: HHH000021: Bytecode provider name : javassist
+[2017-11-09 20:31:53.990] - 600 INFO [restartedMain] --- org.hibernate.annotations.common.Version: HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+[2017-11-09 20:31:54.112] - 600 INFO [restartedMain] --- org.hibernate.dialect.Dialect: HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+[2017-11-09 20:31:54.237] - 600 INFO [restartedMain] --- org.hibernate.tool.hbm2ddl.SchemaUpdate: HHH000228: Running hbm2ddl schema update
+[2017-11-09 20:31:55.966] - 600 WARN [restartedMain] --- org.hibernate.validator.messageinterpolation.ParameterMessageInterpolator: HV000184: ParameterMessageInterpolator has been chosen, EL interpolation will not be supported
+[2017-11-09 20:32:08.338] - 600 信息 [http-nio-8080-exec-1] --- org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]: Initializing Spring FrameworkServlet 'dispatcherServlet'

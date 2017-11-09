@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dinner.snqjf.back.dao.OrderDetailDao">
+	<resultMap type="com.dinner.snqjf.back.entity.OrderDetail" id="OrderDetailMap">
+		<id property="id" column="id"/>
+		<result property="dinnerId" column="dinner_id"/>
+		<result property="orderId" column="order_id"/>
+		<result property="price" column="price"/>
+		<result property="num" column="num"/>
+		<result property="imageUrl" column="image_url"/>
+		<result property="goodTypeName" column="good_type_name"/>
+		<result property="name" column="name"/>
+		<result property="preferentialPrice" column="preferential_price"/>
+		<result property="isPreferential" column="is_preferential"/>
+		<result property="orderTime" column="order_time"/>
+	</resultMap>
+
+	<!--根据主键获取对象-->
+	<select id="get" parameterType="com.dinner.snqjf.back.entity.OrderDetail" resultMap="OrderDetailMap">
+		SELECT id,dinner_id,order_id,price,num,image_url,good_type_name,name,preferential_price,is_preferential,order_time FROM t_order_detail 
+		WHERE id=#{id}
+	</select>
+
+	<!--保存-->
+	<insert id="save" parameterType="com.dinner.snqjf.back.entity.OrderDetail" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_order_detail(dinner_id,order_id,price,num,image_url,good_type_name,name,preferential_price,is_preferential,order_time)
+		VALUES(#{dinnerId},#{orderId},#{price},#{num},#{imageUrl},#{goodTypeName},#{name},#{preferentialPrice},#{isPreferential},#{orderTime})
+	</insert>
+
+	<!--修改-->
+	<update id="update" parameterType="com.dinner.snqjf.back.entity.OrderDetail">
+		UPDATE t_order_detail SET dinner_id=#{dinnerId},order_id=#{orderId},price=#{price},num=#{num},image_url=#{imageUrl},good_type_name=#{goodTypeName},name=#{name},preferential_price=#{preferentialPrice},is_preferential=#{isPreferential},order_time=#{orderTime}
+		WHERE id=#{id}
+	</update>
+
+	<!--删除-->
+	<delete id="delete" parameterType="com.dinner.snqjf.back.entity.OrderDetail">
+		 DELETE FROM t_order_detail WHERE id=#{id}
+	</delete>
+
+	<!--分页查询-->
+	<select id="findByPage" parameterType="com.dinner.snqjf.back.entity.QueryOrderDetail" resultMap="OrderDetailMap">
+		SELECT id,dinner_id,order_id,price,num,image_url,good_type_name,name,preferential_price,is_preferential,order_time FROM t_order_detail
+		WHERE 1=1
+		<if test="dinnerId!=null and dinnerId!='' "  >
+		AND dinner_id=#{dinnerId}
+		</if>
+		<if test="orderId!=null and orderId!='' "  >
+		AND order_id=#{orderId}
+		</if>
+		<if test="price!=null and price!='' "  >
+		AND price=#{price}
+		</if>
+		<if test="num!=null and num!='' "  >
+		AND num=#{num}
+		</if>
+		<if test="imageUrl!=null and imageUrl!='' "  >
+		AND image_url=#{imageUrl}
+		</if>
+		<if test="goodTypeName!=null and goodTypeName!='' "  >
+		AND good_type_name=#{goodTypeName}
+		</if>
+		<if test="name!=null and name!='' "  >
+		AND name=#{name}
+		</if>
+		<if test="preferentialPrice!=null and preferentialPrice!='' "  >
+		AND preferential_price=#{preferentialPrice}
+		</if>
+		<if test="isPreferential!=null and isPreferential!='' "  >
+		AND is_preferential=#{isPreferential}
+		</if>
+		<if test="orderTime!=null and orderTime!='' "  >
+		AND order_time=#{orderTime}
+		</if>
+		<if test="sort!= null">
+		order by ${sort} ${order}
+		</if>
+		limit #{offset},#{limit}
+	</select>
+
+	<!--统计-->
+	<select id="count" parameterType="com.dinner.snqjf.back.entity.QueryOrderDetail" resultType="int">
+		SELECT count(*) FROM t_order_detail
+		WHERE 1=1
+		<if test="dinnerId!=null and dinnerId!='' ">
+		AND dinner_id=#{dinnerId}
+		</if>
+		<if test="orderId!=null and orderId!='' ">
+		AND order_id=#{orderId}
+		</if>
+		<if test="price!=null and price!='' ">
+		AND price=#{price}
+		</if>
+		<if test="num!=null and num!='' ">
+		AND num=#{num}
+		</if>
+		<if test="imageUrl!=null and imageUrl!='' ">
+		AND image_url=#{imageUrl}
+		</if>
+		<if test="goodTypeName!=null and goodTypeName!='' ">
+		AND good_type_name=#{goodTypeName}
+		</if>
+		<if test="name!=null and name!='' ">
+		AND name=#{name}
+		</if>
+		<if test="preferentialPrice!=null and preferentialPrice!='' ">
+		AND preferential_price=#{preferentialPrice}
+		</if>
+		<if test="isPreferential!=null and isPreferential!='' ">
+		AND is_preferential=#{isPreferential}
+		</if>
+		<if test="orderTime!=null and orderTime!='' ">
+		AND order_time=#{orderTime}
+		</if>
+	</select>
+
+	<!--查询-->
+	<select id="query" parameterType="com.dinner.snqjf.back.entity.QueryOrderDetail" resultMap="OrderDetailMap">
+		SELECT id,dinner_id,order_id,price,num,image_url,good_type_name,name,preferential_price,is_preferential,order_time FROM t_order_detail
+		WHERE 1=1
+		<if test="dinnerId!=null and dinnerId!='' ">
+		AND dinner_id=#{dinnerId}
+		</if>
+		<if test="orderId!=null and orderId!='' ">
+		AND order_id=#{orderId}
+		</if>
+		<if test="price!=null and price!='' ">
+		AND price=#{price}
+		</if>
+		<if test="num!=null and num!='' ">
+		AND num=#{num}
+		</if>
+		<if test="imageUrl!=null and imageUrl!='' ">
+		AND image_url=#{imageUrl}
+		</if>
+		<if test="goodTypeName!=null and goodTypeName!='' ">
+		AND good_type_name=#{goodTypeName}
+		</if>
+		<if test="name!=null and name!='' ">
+		AND name=#{name}
+		</if>
+		<if test="preferentialPrice!=null and preferentialPrice!='' ">
+		AND preferential_price=#{preferentialPrice}
+		</if>
+		<if test="isPreferential!=null and isPreferential!='' ">
+		AND is_preferential=#{isPreferential}
+		</if>
+		<if test="orderTime!=null and orderTime!='' ">
+		AND order_time=#{orderTime}
+		</if>
+		<if test="sort!= null">
+		order by ${sort} ${order}
+		</if>
+	</select>
+</mapper>
