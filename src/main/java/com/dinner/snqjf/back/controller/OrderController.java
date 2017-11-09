@@ -2,6 +2,8 @@ package com.dinner.snqjf.back.controller;
 
 import javax.inject.Inject;
 
+import com.dinner.snqjf.back.entity.OrderDetail;
+import com.dinner.snqjf.back.service.OrderDetailService;
 import com.dinner.snqjf.common.base.constant.SystemStaticConst;
 import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
@@ -27,10 +29,28 @@ import java.util.Map;
 public class OrderController extends GenericController<Order, QueryOrder> {
 	@Inject
 	private OrderService orderService;
+	@Inject
+	private OrderDetailService orderDetailService;
 	@Override
 	protected GenericService<Order, QueryOrder> getService() {
 		return orderService;
 	}
+
+	/**
+	 * 功能描述：根据订单号来查找订单明细
+	 * @param entity
+	 * @return
+	 */
+	@RequestMapping(value = "/getOrderDetailByOrderId",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public  Map<String,Object> getOrderDetailByOrderId(OrderDetail entity){
+		Map<String,Object> result = new HashMap<String, Object>();
+		result.put(SystemStaticConst.RESULT,SystemStaticConst.SUCCESS);
+		result.put(SystemStaticConst.MSG,"获取订单数据成功！");
+		result.put("data",orderDetailService.getOrderDetailByOrderId(entity));
+		return result;
+	}
+
 	/**
 	 * 功能描述：实现订单的结账处理
 	 * @param entity

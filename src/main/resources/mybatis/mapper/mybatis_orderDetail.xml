@@ -15,6 +15,11 @@
 		<result property="orderTime" column="order_time"/>
 	</resultMap>
 
+	<!-- 根据订单号来查找订单明细 -->
+	<select id="getOrderDetailByOrderId" parameterType="com.dinner.snqjf.back.entity.OrderDetail" resultMap="OrderDetailMap">
+		select * from t_order_detail where order_id = #{orderId}
+	</select>
+
 	<!--根据主键获取对象-->
 	<select id="get" parameterType="com.dinner.snqjf.back.entity.OrderDetail" resultMap="OrderDetailMap">
 		SELECT id,dinner_id,order_id,price,num,image_url,good_type_name,name,preferential_price,is_preferential,order_time FROM t_order_detail 

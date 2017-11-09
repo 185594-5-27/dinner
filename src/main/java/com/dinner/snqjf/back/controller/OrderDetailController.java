@@ -33,7 +33,7 @@ public class OrderDetailController extends GenericController<OrderDetail, QueryO
 	 * @return
 	 */
 	@RequestMapping(value = "/toOrderDetailList",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-	public ModelAndView toOrderDetailList() throws Exception{
-		return new ModelAndView("/back/orderDetail/orderDetailList");
+	public ModelAndView toOrderDetailList(OrderDetail entity) throws Exception{
+		return new ModelAndView("/back/orderDetail/orderDetailList","entity",entity);
 	}
 }

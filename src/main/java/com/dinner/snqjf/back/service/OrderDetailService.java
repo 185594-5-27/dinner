@@ -12,6 +12,8 @@ import com.dinner.snqjf.back.entity.OrderDetail;
 import com.dinner.snqjf.back.entity.QueryOrderDetail;
 import com.dinner.snqjf.back.dao.OrderDetailDao;
 
+import java.util.List;
+
 /**
  *@author linzf
  **/
@@ -24,5 +26,14 @@ public class OrderDetailService extends GenericService<OrderDetail, QueryOrderDe
 	@Override
 	protected GenericDao<OrderDetail, QueryOrderDetail> getDao() {
 		return orderDetailDao;
+	}
+
+	/**
+	 * 功能描述：根据订单号来查找订单明细
+	 * @param entity
+	 * @return
+	 */
+	public List<OrderDetail> getOrderDetailByOrderId(OrderDetail entity){
+		return orderDetailDao.getOrderDetailByOrderId(entity);
 	}
 }
