@@ -16,33 +16,34 @@
 		<result property="consumeUserId" column="consume_user_id"/>
 		<result property="consumeTime" column="consume_time"/>
 		<result property="score" column="score"/>
+		<result property="note" column="note"/>
 	</resultMap>
 
 	<!-- 取消订单 -->
 	<update id="cancelOrder"  parameterType="com.dinner.snqjf.back.entity.Order">
-        update t_order set state=#{state},consume_time=#{consumeTime} where id = #{id}
+        update t_order set state=#{state},consume_time=#{consumeTime},note=#{note} where id = #{id}
 	</update>
 
 	<!-- 实现订单的结账 -->
 	<update id="checkout" parameterType="com.dinner.snqjf.back.entity.Order">
-		update t_order set state=#{state},consume_time=#{consumeTime},consume_user=#{consumeUser},score=#{score},real_income=#{realIncome} where id = #{id}
+		update t_order set state=#{state},consume_time=#{consumeTime},consume_user=#{consumeUser},score=#{score},real_income=#{realIncome},note=#{note} where id = #{id}
 	</update>
 
 	<!--根据主键获取对象-->
 	<select id="get" parameterType="com.dinner.snqjf.back.entity.Order" resultMap="OrderMap">
-		SELECT id,order_num,order_price,real_income,table_num,private_room,order_time,state,order_user,order_user_id,consume_user,consume_user_id,consume_time,score FROM t_order 
+		SELECT id,order_num,order_price,real_income,table_num,private_room,order_time,state,order_user,order_user_id,consume_user,consume_user_id,consume_time,score,note FROM t_order
 		WHERE id=#{id}
 	</select>
 
 	<!--保存-->
 	<insert id="save" parameterType="com.dinner.snqjf.back.entity.Order">
-		INSERT INTO t_order(id,order_num,order_price,real_income,table_num,private_room,order_time,state,order_user,order_user_id,consume_user,consume_user_id,consume_time,score)
-		VALUES(#{id},#{orderNum},#{orderPrice},#{realIncome},#{tableNum},#{privateRoom},#{orderTime},#{state},#{orderUser},#{orderUserId},#{consumeUser},#{consumeUserId},#{consumeTime},#{score})
+		INSERT INTO t_order(id,order_num,order_price,real_income,table_num,private_room,order_time,state,order_user,order_user_id,consume_user,consume_user_id,consume_time,score,note)
+		VALUES(#{id},#{orderNum},#{orderPrice},#{realIncome},#{tableNum},#{privateRoom},#{orderTime},#{state},#{orderUser},#{orderUserId},#{consumeUser},#{consumeUserId},#{consumeTime},#{score},#{note})
 	</insert>
 
 	<!--修改-->
 	<update id="update" parameterType="com.dinner.snqjf.back.entity.Order">
-		UPDATE t_order SET order_num=#{orderNum},order_price=#{orderPrice},real_income=#{realIncome},table_num=#{tableNum},private_room=#{privateRoom},order_time=#{orderTime},state=#{state},order_user=#{orderUser},order_user_id=#{orderUserId},consume_user=#{consumeUser},consume_user_id=#{consumeUserId},consume_time=#{consumeTime},score=#{score}
+		UPDATE t_order SET order_num=#{orderNum},order_price=#{orderPrice},real_income=#{realIncome},table_num=#{tableNum},private_room=#{privateRoom},order_time=#{orderTime},state=#{state},order_user=#{orderUser},order_user_id=#{orderUserId},consume_user=#{consumeUser},consume_user_id=#{consumeUserId},consume_time=#{consumeTime},score=#{score},note=#{note}
 		WHERE id=#{id}
 	</update>
 
@@ -53,7 +54,7 @@
 
 	<!--分页查询-->
 	<select id="findByPage" parameterType="com.dinner.snqjf.back.entity.QueryOrder" resultMap="OrderMap">
-		SELECT id,order_num,order_price,real_income,table_num,private_room,order_time,state,order_user,order_user_id,consume_user,consume_user_id,consume_time,score FROM t_order
+		SELECT id,order_num,order_price,real_income,table_num,private_room,order_time,state,order_user,order_user_id,consume_user,consume_user_id,consume_time,score,note FROM t_order
 		WHERE 1=1
 		<if test="id!=null and id!='' "  >
 		AND id=#{id}

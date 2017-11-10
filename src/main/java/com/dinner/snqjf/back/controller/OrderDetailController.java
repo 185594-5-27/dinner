@@ -2,6 +2,8 @@ package com.dinner.snqjf.back.controller;
 
 import javax.inject.Inject;
 
+import com.dinner.snqjf.back.entity.Order;
+import com.dinner.snqjf.back.service.OrderService;
 import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +25,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class OrderDetailController extends GenericController<OrderDetail, QueryOrderDetail> {
 	@Inject
 	private OrderDetailService orderDetailService;
+	@Inject
+	private OrderService orderService;
 	@Override
 	protected GenericService<OrderDetail, QueryOrderDetail> getService() {
 		return orderDetailService;
@@ -32,8 +36,9 @@ public class OrderDetailController extends GenericController<OrderDetail, QueryO
 	 * 功能描述：直接跳转到更新数据的页面
 	 * @return
 	 */
-	@RequestMapping(value = "/toOrderDetailList",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-	public ModelAndView toOrderDetailList(OrderDetail entity) throws Exception{
-		return new ModelAndView("/back/orderDetail/orderDetailList","entity",entity);
+	@RequestMapping(value = "/toOrderDetail",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ModelAndView toOrderDetail(Order entity) throws Exception{
+		entity = orderService.get(entity);
+		return new ModelAndView("/back/orderDetail/orderDetail","entity",entity);
 	}
 }

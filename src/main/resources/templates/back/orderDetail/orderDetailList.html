@@ -1,26 +1,115 @@
 <html xmlns:th="http://www.thymeleaf.org"
- xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"> 
-<head th:include="include/includebase"></head> 
-<body> 
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="include/includebase"></head>
+<body>
 <div class="panel-body" style="padding-bottom:0px;">
-	<div class="panel panel-default">
-		<div class="panel-heading">消费信息</div>
-		<div class="panel-body">
-			总计消费:XXXX
-			<form class="form-inline" role="form" style="float: left; width: 100%;margin-left: 20px;" method="post" id="queryorderDetail">
-			</form>
-		</div>
-	</div>
+    <div class="panel panel-default">
+        <div class="panel-heading">消费信息</div>
+        <div class="panel-body">
+            总计消费:XXXX
+            <form class="form-inline" role="form" style="float: left; width: 100%;margin-left: 20px;" method="post"
+                  id="queryorderDetail">
+            </form>
+        </div>
+    </div>
+
+    <table id="orderDetail-table" style="margin-top: -50px;">
+    </table>
 </div>
 <script th:inline="javascript">
-    $(function() {
-        $.post("/order/getOrderDetailByOrderId",{orderId:[[${entity.orderId}]]},function(e){
-             $.each( e.data,function(index,info){
-                 alert(info.num)
-			 })
-
-		})
-    })
+    $(function () {
+        initTable();
+    });
+    function doQuery() {
+        $('#orderDetail-table').bootstrapTable('refresh');    //刷新表格
+    }
+    function initTable() {
+        $('#orderDetail-table').bootstrapTable({
+            url: "/orderDetail/list",
+            height: $(window.parent.document).find("#wrapper").height() - 452,
+            width: $(window).width(),
+            showColumns: true,
+            formId: "queryorderDetail",
+            pagination: true,
+            sortName: 'id',
+            sortOrder: 'desc',
+            clickToSelect: true,// 单击某一行的时候选中某一条记录
+            pageSize: 5,
+            toolbars: [],
+            columns: [
+                {
+                    checkbox: true
+                },
+                {
+                    field: '',
+                    title: '序号',
+                    formatter: function (value, row, index) {
+                        return index + 1;
+                    }
+                },
+                {
+                    field: 'price',
+                    title: '单价',
+                    align: 'center',
+                    valign: 'middle',
+                    sortable: true
+                },
+                {
+                    field: 'num',
+                    title: '数量',
+                    align: 'center',
+                    valign: 'middle',
+                    sortable: true
+                },
+                {
+                    field: 'goodTypeName',
+                    title: '菜品类型名字',
+                    align: 'center',
+                    valign: 'middle',
+                    sortable: true
+                },
+                {
+                    field: 'name',
+                    title: '菜名',
+                    align: 'center',
+                    valign: 'middle',
+                    sortable: true
+                },
+                {
+                    field: 'preferentialPrice',
+                    title: '优惠价格',
+                    align: 'center',
+                    valign: 'middle',
+                    sortable: true
+                },
+                {
+                    field: 'isPreferential',
+                    title: '是否优惠',
+                    align: 'center',
+                    valign: 'middle',
+                    sortable: true,
+                    formatter: function (value, row, index) {
+                        if (value == '1') {
+                            return "有优惠";
+                        } else {
+                            return "无优惠";
+                        }
+                    }
+                },
+                {
+                    field: 'orderTime',
+                    title: '下单时间',
+                    align: 'center',
+                    valign: 'middle',
+                    sortable: true,
+                    formatter: function (value, row, index) {
+                        var dt = new Date(value).format('yyyy-MM-dd hh:mm:ss');
+                        return dt;
+                    }
+                }
+            ]
+        });
+    }
 </script>
 </body>
-</html>
+</html >
