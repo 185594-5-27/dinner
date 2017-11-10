@@ -5,6 +5,11 @@ import java.sql.Timestamp;
  *@author linzf
  **/
 public class OrderDetail {
+	// 有优惠
+	public static final String ORDER_DETAIL_HAS_PREFERENTIAL = "1";
+	// 没有优惠
+	public static final String ORDER_DETAIL_NO_PREFERENTIAL = "2";
+
 	//点餐列表流水ID 
 	private int id;
 	//菜单ID 
@@ -27,6 +32,16 @@ public class OrderDetail {
 	private String isPreferential;
 	//下单时间 
 	private Timestamp orderTime;
+	// （1：正常；2：撤单）
+	private String state;
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
 
 	public int getId() {
 		return id;

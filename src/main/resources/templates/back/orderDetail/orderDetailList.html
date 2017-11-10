@@ -3,16 +3,6 @@
 <head th:include="include/includebase"></head>
 <body>
 <div class="panel-body" style="padding-bottom:0px;">
-    <div class="panel panel-default">
-        <div class="panel-heading">消费信息</div>
-        <div class="panel-body">
-            总计消费:XXXX
-            <form class="form-inline" role="form" style="float: left; width: 100%;margin-left: 20px;" method="post"
-                  id="queryorderDetail">
-            </form>
-        </div>
-    </div>
-
     <table id="orderDetail-table" style="margin-top: -50px;">
     </table>
 </div>
@@ -23,9 +13,14 @@
     function doQuery() {
         $('#orderDetail-table').bootstrapTable('refresh');    //刷新表格
     }
+
+    function orderDetailManager(id){
+        window.Ewin.dialog({title:"修改明细",url:"/orderDetail/updatePage?id="+id,width:400,height:600});
+    }
+
     function initTable() {
         $('#orderDetail-table').bootstrapTable({
-            url: "/orderDetail/list",
+            url: "/orderDetail/list?orderId="+[[${entity.id}]],
             height: $(window.parent.document).find("#wrapper").height() - 452,
             width: $(window).width(),
             showColumns: true,
@@ -63,7 +58,7 @@
                 },
                 {
                     field: 'goodTypeName',
-                    title: '菜品类型名字',
+                    title: '菜品类型',
                     align: 'center',
                     valign: 'middle',
                     sortable: true
@@ -105,6 +100,14 @@
                     formatter: function (value, row, index) {
                         var dt = new Date(value).format('yyyy-MM-dd hh:mm:ss');
                         return dt;
+                    }
+                },{
+                    field : 'operations',
+                    title : '操作',
+                    align : 'center',
+                    valign : 'middle',
+                    formatter: function (value, row, index) {
+                        return '<a href="#" onclick="orderDetailManager('+row.id+')">操作</a>';
                     }
                 }
             ]

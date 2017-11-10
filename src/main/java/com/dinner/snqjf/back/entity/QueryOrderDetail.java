@@ -26,6 +26,16 @@ public class QueryOrderDetail extends QueryBase {
 	private String isPreferential;
 	//下单时间 
 	private String orderTime;
+	// （1：正常；2：撤单）
+	private String state;
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
 
 	public Integer getDinnerId() {
 		return dinnerId;

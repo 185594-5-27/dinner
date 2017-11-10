@@ -49,11 +49,11 @@
 	}
 	// 消费明细
 	function orderDetail(id){
-        window.Ewin.dialogShow({title:"消费明细",url:"orderDetail/toOrderDetail?id="+id,width:1000,height:800})
+        window.Ewin.dialogShow({title:"消费明细",url:"orderDetail/toOrderDetail?id="+id,width:900,height:800})
 	}
 	// 明细操作
 	function orderDetailController(id){
-
+        window.Ewin.dialogShow({title:"明细操作",url:"orderDetail/toOrderDetailList?id="+id,width:900,height:600})
 	}
 
 	function initTable(){
@@ -203,7 +203,7 @@
 					valign : 'middle',
 					sortable : true,
                     formatter: function (value, row, index) {
-					    if(row.state=='2'){
+					    if(row.state=='1'){
 					        return "";
 						}else{
                             var dt = new Date(value).format('yyyy-MM-dd hh:mm:ss');

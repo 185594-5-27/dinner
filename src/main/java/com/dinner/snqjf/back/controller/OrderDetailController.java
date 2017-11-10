@@ -33,7 +33,16 @@ public class OrderDetailController extends GenericController<OrderDetail, QueryO
 	}
 
 	/**
-	 * 功能描述：直接跳转到更新数据的页面
+	 * 功能描述：操作订单明细数据
+	 * @return
+	 */
+	@RequestMapping(value = "/toOrderDetailList",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ModelAndView toOrderDetailistList(Order entity) throws Exception{
+		return new ModelAndView("/back/orderDetail/orderDetailList","entity",entity);
+	}
+
+	/**
+	 * 功能描述：展示订单明细数据
 	 * @return
 	 */
 	@RequestMapping(value = "/toOrderDetail",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)

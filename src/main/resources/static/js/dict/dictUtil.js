@@ -46,12 +46,20 @@ function getDictText(type,code){
     return value.split("|")[1];
 }
 // 根据type来获取value的值
-function getSelectOption(type,id){
+function getSelectOption(type,id,select){
     var optionHtml = "";
     for (var i = 0; i < dictValueMap.arr.length; i++) {
         if (dictValueMap.arr[i].key.indexOf(type)!=-1) {
             var value = dictValueMap.arr[i].value.split("|");
-            optionHtml = optionHtml + "<option value='"+value[0]+"'>"+value[1]+"</option>";
+            if(select!=undefined){
+                if(select==value[0]){
+                    optionHtml = optionHtml + "<option value='"+value[0]+"' selected>"+value[1]+"</option>";
+                }else{
+                    optionHtml = optionHtml + "<option value='"+value[0]+"'>"+value[1]+"</option>";
+                }
+            }else{
+                optionHtml = optionHtml + "<option value='"+value[0]+"'>"+value[1]+"</option>";
+            }
         }
     }
     $("#"+id).append(optionHtml)
