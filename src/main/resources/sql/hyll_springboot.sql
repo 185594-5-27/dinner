@@ -13,6 +13,8 @@ File Encoding         : 65001
 Date: 2017-11-10 16:51:52
 */
 
+USE hyll_springboot;
+
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------

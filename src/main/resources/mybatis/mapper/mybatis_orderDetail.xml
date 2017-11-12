@@ -14,6 +14,7 @@
 		<result property="isPreferential" column="is_preferential"/>
 		<result property="orderTime" column="order_time"/>
 		<result property="state" column="state"/>
+		<result property="type" column="type"/>
 	</resultMap>
 
 	<!-- 根据订单号来查找订单明细 -->
@@ -23,14 +24,14 @@
 
 	<!--根据主键获取对象-->
 	<select id="get" parameterType="com.dinner.snqjf.back.entity.OrderDetail" resultMap="OrderDetailMap">
-		SELECT id,dinner_id,order_id,price,num,image_url,good_type_name,name,preferential_price,is_preferential,order_time,state FROM t_order_detail
+		SELECT id,dinner_id,order_id,price,num,image_url,good_type_name,name,preferential_price,is_preferential,order_time,state,type FROM t_order_detail
 		WHERE id=#{id}
 	</select>
 
 	<!--保存-->
 	<insert id="save" parameterType="com.dinner.snqjf.back.entity.OrderDetail" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO t_order_detail(dinner_id,order_id,price,num,image_url,good_type_name,name,preferential_price,is_preferential,order_time,state)
-		VALUES(#{dinnerId},#{orderId},#{price},#{num},#{imageUrl},#{goodTypeName},#{name},#{preferentialPrice},#{isPreferential},#{orderTime},#{state})
+		INSERT INTO t_order_detail(dinner_id,order_id,price,num,image_url,good_type_name,name,preferential_price,is_preferential,order_time,state,type)
+		VALUES(#{dinnerId},#{orderId},#{price},#{num},#{imageUrl},#{goodTypeName},#{name},#{preferentialPrice},#{isPreferential},#{orderTime},#{state},#{type})
 	</insert>
 
 	<!--修改-->
@@ -46,7 +47,7 @@
 
 	<!--分页查询-->
 	<select id="findByPage" parameterType="com.dinner.snqjf.back.entity.QueryOrderDetail" resultMap="OrderDetailMap">
-		SELECT id,dinner_id,order_id,price,num,image_url,good_type_name,name,preferential_price,is_preferential,order_time,state FROM t_order_detail
+		SELECT id,dinner_id,order_id,price,num,image_url,good_type_name,name,preferential_price,is_preferential,order_time,state,type FROM t_order_detail
 		WHERE 1=1
 		<if test="dinnerId!=null and dinnerId!='' "  >
 		AND dinner_id=#{dinnerId}
@@ -122,7 +123,7 @@
 
 	<!--查询-->
 	<select id="query" parameterType="com.dinner.snqjf.back.entity.QueryOrderDetail" resultMap="OrderDetailMap">
-		SELECT id,dinner_id,order_id,price,num,image_url,good_type_name,name,preferential_price,is_preferential,order_time,state FROM t_order_detail
+		SELECT id,dinner_id,order_id,price,num,image_url,good_type_name,name,preferential_price,is_preferential,order_time,state,type FROM t_order_detail
 		WHERE 1=1
 		<if test="dinnerId!=null and dinnerId!='' ">
 		AND dinner_id=#{dinnerId}

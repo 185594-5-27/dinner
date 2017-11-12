@@ -34,6 +34,16 @@ public class OrderDetail {
 	private Timestamp orderTime;
 	// （1：正常；2：撤单）
 	private String state;
+	//点餐类型（1：正常；2：加菜）
+	private String type;
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 
 	public String getState() {
 		return state;
