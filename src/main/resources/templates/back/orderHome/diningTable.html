@@ -1,28 +1,178 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-<html lang="en">
-<head th:include="include/includeOrderHome">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/component.css}" rel="stylesheet"/>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
     <title>餐桌选择</title>
 </head>
-<body>
-<div class="row">
-    <div class="col-md-4 clearfix foot-items">
-        <div class="col-xs-4 foot-img"><img src="images/2.jpg" class="img-responsive" alt="Responsive image"
-                                            data_id="3"></div>
-        <div class="col-xs-6 foot-info"><p><strong>饺子</strong></p>
-            <p class="colred">53元/份</p>
-            <p>
-                <small>0人买过</small>
-            </p>
-        </div>
-        <div class="col-xs-2 icons-pick foot-pick">
-            <div class="btn_wrap">
-                <button class="minus" style="display: none;"><strong></strong></button>
-                <i style="display: none;">0</i>
-                <button class="list_add list_id_respone" data_id="3" data-toggle="modal" data-target="#myModal">
-                    <strong></strong></button>
-                <em class="fixBig  fake"></em></div>
+<body class="home">
+
+
+<!-- / Site Header -->
+<div class="site-header">
+
+
+    <!-- / Site Logo -->
+    <div class="site-logo">
+        <a href="">
+            <img src="images/site-logo.png" />
+        </a>
+    </div>
+    <!-- \ Site Logo -->
+
+
+    <!-- / Site Menu -->
+    <div class="site-menu">
+        <div class="icon" ></div>
+        <div class="menu">
+            <ul>
+                <li><a href="index.html">Portfolio</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="portfolio-single.html">Portfolio Single</a></li>
+                <li><a href="blog.html">Blog / News</a></li>
+                <li><a href="blog-single.html">Blog Single</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="shortcodes.html">Shortcodes</a></li>
+            </ul>
         </div>
     </div>
+    <!-- \ Site Menu -->
+
+
+    <!-- / Site Description -->
+    <h1>
+        请选择右侧的相应的桌号来进行点餐!
+    </h1>
+    <!-- \ Site Description -->
+
+
+    <!-- / Site Footer -->
+    <div class="site-footer">
+        <div class="site-social">
+            <ul>
+                <li><i class="pe-so-dribbble pe-lg pe-va"></i></li>
+                <li><i class="pe-so-facebook pe-lg pe-va"></i></li>
+                <li><i class="pe-so-twitter pe-lg pe-va"></i></li>
+            </ul>
+        </div>
+
+        <p>© 2015 Finec</p>
+        <p>HTML Theme by <a href="http://themeraid.com">ThemeRaid</a></p>
+    </div>
+    <!-- \ Site Footer -->
+
 </div>
+<!-- \ Site Header -->
+
+
+<!-- \ Site Main -->
+<div class="site-main">
+
+    <ul class="row grid cs-style-2">
+        <li class="col-md-2 post">
+            <figure>
+                <img src="/images/desk/01.jpg">
+                <figcaption>
+                    <h3>太和殿</h3>
+                    <span>太和殿介绍</span>
+                </figcaption>
+            </figure>
+        </li>
+        <li class="col-md-2 post">
+            <figure>
+                <img src="/images/desk/02.jpg">
+                <figcaption>
+                    <h3>中和殿</h3>
+                    <span>中和殿介绍</span>
+                </figcaption>
+            </figure>
+        </li>
+        <li class="col-md-2 post">
+            <figure>
+                <img src="/images/desk/03.jpg">
+                <figcaption>
+                    <h3>保和殿</h3>
+                    <span>保和殿介绍</span>
+                </figcaption>
+            </figure>
+        </li>
+        <li class="col-md-2 post">
+            <figure>
+                <img src="/images/desk/04.jpg">
+                <figcaption>
+                    <h3>乾清宫</h3>
+                    <span>乾清宫介绍</span>
+                </figcaption>
+            </figure>
+        </li>
+        <li class="col-md-2 post">
+            <figure>
+                <img src="/images/desk/05.jpg">
+                <figcaption>
+                    <h3>交泰殿</h3>
+                    <span>交泰殿介绍</span>
+                </figcaption>
+            </figure>
+        </li>
+        <li class="col-md-2 post">
+            <figure>
+                <img src="/images/desk/06.jpg">
+                <figcaption>
+                    <h3>坤宁宫</h3>
+                    <span>坤宁宫介绍</span>
+                </figcaption>
+            </figure>
+        </li>
+        <li class="col-md-2 post">
+            <figure>
+                <img src="/images/desk/07.jpg">
+                <figcaption>
+                    <h3>储秀宫</h3>
+                    <span>储秀宫介绍</span>
+                </figcaption>
+            </figure>
+        </li>
+        <li class="col-md-2 post">
+            <figure>
+                <img src="images/desk/09.jpg">
+                <figcaption>
+                    <h3>养心殿</h3>
+                    <span>养心殿介绍</span>
+                </figcaption>
+            </figure>
+        </li>
+    </ul>
+</div>
+
+<script th:src="@{/js/jquery.js}"></script>
+<script>
+
+
+    $(function(){
+        $(".row.grid.cs-style-2 li").bind('click',function(){
+            alert($(this).find("input").val())
+        });
+
+        $( ".icon" ).click(function() {
+            $( ".menu" ).slideToggle(175);
+            $( this ).toggleClass( "opened" );
+            if($(window).width()<=992){
+                 if($(".icon").attr("class").indexOf("opened")!=-1){
+                     $(".site-header").css("height","300px");
+                 }else{
+                     $(".site-header").css("height","70px");
+                 }
+            }
+            if($(window).width() > 992) {
+                $('.site-header h1').slideToggle(300);
+            }
+        });
+
+    })
+</script>
+<script th:src="@{/js/dining/modernizr.custom.js}"></script>
+<script th:src="@{/js/dining/toucheffects.js}"></script>
 </body>
 </html>
