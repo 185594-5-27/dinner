@@ -35,6 +35,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         // 跳转到点菜主页
         registry.addViewController("/orderHome").setViewName("/back/orderHome/main");
 
+        registry.addViewController("/diningTable").setViewName("/back/orderHome/diningTable");
+
     }
 
 }
