@@ -62,4 +62,9 @@
 		order by ${sort} ${order}
 		</if>
 	</select>
+
+	<!-- 加载所有数据 -->
+	<select id="loadAll" resultMap="FoodTypeMap" >
+		SELECT id,type FROM t_food_type
+	</select>
 </mapper>

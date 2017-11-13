@@ -27,6 +27,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new CustomPasswordEncoder();
     }
 
+    @Bean
+    LoginSuccessHandle loginSuccessHandle(){return new LoginSuccessHandle();}
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(customUserService()).passwordEncoder(passwordEncoder());
@@ -52,6 +55,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/main")
+                .successHandler(loginSuccessHandle())
                 .failureUrl("/login?error=true")
                 .permitAll()
                 .and()
