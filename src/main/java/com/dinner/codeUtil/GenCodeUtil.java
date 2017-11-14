@@ -360,6 +360,6 @@ public class GenCodeUtil {
 	 * @throws IOException 
 	 */
 	public static void main(String[] args) throws IOException {
-		genFiles("linzf", "t_order_detail", "com.dinner.snqjf.common.base","com.dinner.snqjf.back", "/resources/mybatis/mapper","/src/main/resources/templates/back/","OrderDetail", "QueryOrderDetail", "application-dev.properties");
+		genFiles("linzf", "t_dining_table", "com.dinner.snqjf.common.base","com.dinner.snqjf.back", "/resources/mybatis/mapper","/src/main/resources/templates/back/","DiningTable", "QueryDiningTable", "application-dev.properties");
 	}
 }

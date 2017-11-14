@@ -26,16 +26,16 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         registry.addViewController("/groupList").setViewName("/sys/orggroup/groupList");
         registry.addViewController("/userList").setViewName("/sys/user/userList");
         registry.addViewController("/treeList").setViewName("/sys/tree/treeList");
+        // 跳转到点餐桌子主页
+        registry.addViewController("/diningTable").setViewName("/back/orderHome/diningTable");
         // 菜品类型列表页
         registry.addViewController("/foodTypeList").setViewName("/back/foodType/foodTypeList");
         // 菜单列表页
         registry.addViewController("/dinerList").setViewName("/back/diner/dinerList");
         // 订单列表页
         registry.addViewController("/orderList").setViewName("/back/order/orderList");
-        // 跳转到点菜主页
-        registry.addViewController("/orderHome").setViewName("/back/orderHome/main");
-
-        registry.addViewController("/diningTable").setViewName("/back/orderHome/diningTable");
+        // 桌子列表页
+        registry.addViewController("/diningTableList").setViewName("/back/diningTable/diningTableList");
 
     }
 

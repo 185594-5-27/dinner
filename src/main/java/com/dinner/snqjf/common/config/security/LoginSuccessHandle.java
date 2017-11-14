@@ -22,7 +22,7 @@ public class LoginSuccessHandle  implements AuthenticationSuccessHandler {
         String path = request.getContextPath() ;
         String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
         if (roles.contains("ROLE_DINER")){
-            response.sendRedirect(basePath+"orderHome");
+            response.sendRedirect(basePath+"diningTable");
             return;
         }
         response.sendRedirect(basePath+"main");

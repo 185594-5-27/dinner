@@ -3,6 +3,9 @@
     <title>点菜主页</title>
 </head>
 <body>
+<div class="viewer" style="font-size: 30px;color: red;">
+<marquee th:text="'您当前正在为'+${entity.name}+'点菜中'"></marquee>
+</div>
 <div id="wrapper" class="viewer">
     <div id="sidebar-wrapper">
         <div class="well sidebar-nav">
@@ -46,6 +49,9 @@
     </section>
     <section class="oder_content">
         <div class="container" id="J_order_list">
+        </div>
+        <div class="container" id="J_pick_order_list">
+            asdaskjd
         </div>
     </section>
     <section class="oder_submit">
@@ -165,9 +171,10 @@
         </div>
     </div>
 </div>
-<script src="js/jquery.js"></script>
-<script src="js/bootstrap.min.js"></script>
 <script th:inline="javascript">
+
+    var pickOrderMoney = 0;
+
     var iG = iG||{};
     if(window.localStorage){
         try{
@@ -209,9 +216,17 @@
             $(".wrapper,#wrapper").removeClass("hide");
             $("#wrapper").addClass("hide");
             $("#wrapper2").addClass("show")
-            //$("#J_order_Manager").siblings("div").remove();
-            $("#J_order_list").html(buildOrder(iG.order));
-            $("#price_txt").html(countPrice() + "元");
+            pickOrderMoney = 0;
+            $.post("/orderHome/getOrderByDiningTable",{id:[[${entity.id}]]},function(e){
+                 if(e.result){
+                     $("#J_pick_order_list").html(buildPickOrder(e.data));
+                     for(var i in e.data){
+                         pickOrderMoney = pickOrderMoney + e.data[i].price * e.data[i].num;
+                     }
+                 }
+                $("#J_order_list").html(buildOrder(iG.order));
+                $("#price_txt").html(countPrice() + "元");
+            });
         });
         $("body").on("click","#addOrder",function(){
             $(".wrapper,#wrapper").removeClass("show");
@@ -379,7 +394,7 @@
         for(var i in iG.order){
             price += Number(iG.order[i].price)*iG.order[i].counter;
         }
-        return price;
+        return price+pickOrderMoney;
     }
     function listManger(_list){
         var result = "";
@@ -418,6 +433,20 @@
         }
         if(check){
             result += "<div class=\"row gray_line\"><div class=\"col-md-12 clearfix board_content\"><p style=\"text-align: center;\"><span>亲，还没选到心仪的菜喔，点加菜开始选菜吧！</span></p></div></div>";
+        }
+        return result;
+    }
+
+    // 加载已经点好的餐的数据
+    function buildPickOrder(data){
+        var result = "<div class=\"row\" id=\"J_order_Manager\"><div class=\"col-xs-12 clearfix board_content\"><div class=\"col-xs-4 title_contain\"><p class=\"menu_title \">已点菜单</p></div><div class=\"col-xs-2\"></div></div></div>";
+        var check = false;
+        for(var i in data){
+            result += "<div class=\"row gray_line\"><div class=\"col-md-12 clearfix board_content\"><div class=\"col-xs-6\"><div class=\"col-md-6 clearfix order_item_name\"><label>"+data[i].name+"</label></div><div class=\"col-md-6 clearfix order_price\">"+data[i].price+"元一例</div></div><div class=\"col-xs-6\"><div class=\"btn_wrap counter\"><i class=\"nocounter fl\" style=\"display: inline-block;\">"+data[i].num+"</i></div></div></div></div>";
+            check = true;
+        }
+        if(!check) {
+            return "";
         }
         return result;
     }

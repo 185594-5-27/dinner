@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dinner.snqjf.back.dao.DiningTableDao">
+	<resultMap type="com.dinner.snqjf.back.entity.DiningTable" id="DiningTableMap">
+		<id property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="state" column="state"/>
+		<result property="image" column="image"/>
+		<result property="crtDate" column="crt_date"/>
+		<result property="crtUser" column="crt_user"/>
+		<result property="crtUserId" column="crt_user_id"/>
+		<result property="diningDescribe" column="dining_describe"/>
+		<result property="note" column="note"/>
+		<result property="orderId" column="order_id"/>
+	</resultMap>
+
+	<!--根据主键获取对象-->
+	<select id="get" parameterType="com.dinner.snqjf.back.entity.DiningTable" resultMap="DiningTableMap">
+		SELECT id,name,state,image,crt_date,crt_user,crt_user_id,dining_describe,note,order_id FROM t_dining_table
+		WHERE id=#{id}
+	</select>
+
+	<!--保存-->
+	<insert id="save" parameterType="com.dinner.snqjf.back.entity.DiningTable" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_dining_table(name,state,image,crt_date,crt_user,crt_user_id,dining_describe,note,order_id)
+		VALUES(#{name},#{state},#{image},#{crtDate},#{crtUser},#{crtUserId},#{diningDescribe},#{note},#{orderId})
+	</insert>
+
+	<!--修改-->
+	<update id="update" parameterType="com.dinner.snqjf.back.entity.DiningTable">
+		UPDATE t_dining_table SET name=#{name},state=#{state},image=#{image},dining_describe=#{diningDescribe},note=#{note}
+		WHERE id=#{id}
+	</update>
+
+	<!--删除-->
+	<delete id="delete" parameterType="com.dinner.snqjf.back.entity.DiningTable">
+		 DELETE FROM t_dining_table WHERE id=#{id}
+	</delete>
+
+	<!--分页查询-->
+	<select id="findByPage" parameterType="com.dinner.snqjf.back.entity.QueryDiningTable" resultMap="DiningTableMap">
+		SELECT id,name,state,image,crt_date,crt_user,crt_user_id,dining_describe,note,order_id FROM t_dining_table
+		WHERE 1=1
+		<if test="name!=null and name!='' "  >
+		AND name=#{name}
+		</if>
+		<if test="state!=null and state!='' "  >
+		AND state=#{state}
+		</if>
+		<if test="image!=null and image!='' "  >
+		AND image=#{image}
+		</if>
+		<if test="crtDate!=null and crtDate!='' "  >
+		AND crt_date=#{crtDate}
+		</if>
+		<if test="crtUser!=null and crtUser!='' "  >
+		AND crt_user=#{crtUser}
+		</if>
+		<if test="crtUserId!=null and crtUserId!='' "  >
+		AND crt_user_id=#{crtUserId}
+		</if>
+		<if test="diningDescribe!=null and diningDescribe!='' "  >
+		AND dining_describe=#{diningDescribe}
+		</if>
+		<if test="note!=null and note!='' "  >
+		AND note=#{note}
+		</if>
+		<if test="sort!= null">
+		order by ${sort} ${order}
+		</if>
+		limit #{offset},#{limit}
+	</select>
+
+	<!--统计-->
+	<select id="count" parameterType="com.dinner.snqjf.back.entity.QueryDiningTable" resultType="int">
+		SELECT count(*) FROM t_dining_table
+		WHERE 1=1
+		<if test="name!=null and name!='' ">
+		AND name=#{name}
+		</if>
+		<if test="state!=null and state!='' ">
+		AND state=#{state}
+		</if>
+		<if test="image!=null and image!='' ">
+		AND image=#{image}
+		</if>
+		<if test="crtDate!=null and crtDate!='' ">
+		AND crt_date=#{crtDate}
+		</if>
+		<if test="crtUser!=null and crtUser!='' ">
+		AND crt_user=#{crtUser}
+		</if>
+		<if test="crtUserId!=null and crtUserId!='' ">
+		AND crt_user_id=#{crtUserId}
+		</if>
+		<if test="diningDescribe!=null and diningDescribe!='' ">
+		AND dining_describe=#{diningDescribe}
+		</if>
+		<if test="note!=null and note!='' ">
+		AND note=#{note}
+		</if>
+	</select>
+
+	<!--查询-->
+	<select id="query" parameterType="com.dinner.snqjf.back.entity.QueryDiningTable" resultMap="DiningTableMap">
+		SELECT id,name,state,image,crt_date,crt_user,crt_user_id,dining_describe,note,order_id FROM t_dining_table
+		WHERE 1=1
+		<if test="name!=null and name!='' ">
+		AND name=#{name}
+		</if>
+		<if test="state!=null and state!='' ">
+		AND state=#{state}
+		</if>
+		<if test="image!=null and image!='' ">
+		AND image=#{image}
+		</if>
+		<if test="crtDate!=null and crtDate!='' ">
+		AND crt_date=#{crtDate}
+		</if>
+		<if test="crtUser!=null and crtUser!='' ">
+		AND crt_user=#{crtUser}
+		</if>
+		<if test="crtUserId!=null and crtUserId!='' ">
+		AND crt_user_id=#{crtUserId}
+		</if>
+		<if test="diningDescribe!=null and diningDescribe!='' ">
+		AND dining_describe=#{diningDescribe}
+		</if>
+		<if test="note!=null and note!='' ">
+		AND note=#{note}
+		</if>
+		<if test="sort!= null">
+		order by ${sort} ${order}
+		</if>
+	</select>
+</mapper>
