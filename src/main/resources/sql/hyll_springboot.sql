@@ -10,10 +10,10 @@ Target Server Type    : MYSQL
 Target Server Version : 50716
 File Encoding         : 65001
 
-Date: 2017-11-10 16:51:52
+Date: 2017-11-15 16:42:44
 */
 
-USE hyll_springboot;
+use hyll_springboot;
 
 SET FOREIGN_KEY_CHECKS=0;
 
@@ -29,7 +29,7 @@ CREATE TABLE `dict` (
   `value` varchar(255) DEFAULT NULL,
   `is_load` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of dict
@@ -47,6 +47,9 @@ INSERT INTO `dict` VALUES ('42', 'READY_PAY', '已付款', 'ORDER_STATE', '2', '
 INSERT INTO `dict` VALUES ('43', 'CANCEL_ORDER', '取消订单', 'ORDER_STATE', '3', '1');
 INSERT INTO `dict` VALUES ('44', 'NORMAL', '正常', 'ORDER_DETAIL_STATE', '1', '1');
 INSERT INTO `dict` VALUES ('45', 'BACK', '撤单', 'ORDER_DETAIL_STATE', '2', '1');
+INSERT INTO `dict` VALUES ('46', 'WAIT_USE', '待使用', 'DINING_TABLE_STATE', '1', '1');
+INSERT INTO `dict` VALUES ('47', 'USE', '使用中', 'DINING_TABLE_STATE', '2', '1');
+INSERT INTO `dict` VALUES ('48', 'MAINTENANCE', '维护中', 'DINING_TABLE_STATE', '3', '1');
 
 -- ----------------------------
 -- Table structure for `message`
@@ -133,6 +136,10 @@ CREATE TABLE `role_associate_tree` (
 -- Records of role_associate_tree
 -- ----------------------------
 INSERT INTO `role_associate_tree` VALUES ('2', '17');
+INSERT INTO `role_associate_tree` VALUES ('2', '23');
+INSERT INTO `role_associate_tree` VALUES ('2', '24');
+INSERT INTO `role_associate_tree` VALUES ('2', '25');
+INSERT INTO `role_associate_tree` VALUES ('2', '26');
 INSERT INTO `role_associate_tree` VALUES ('1', '1');
 INSERT INTO `role_associate_tree` VALUES ('1', '2');
 INSERT INTO `role_associate_tree` VALUES ('1', '7');
@@ -143,6 +150,36 @@ INSERT INTO `role_associate_tree` VALUES ('1', '17');
 INSERT INTO `role_associate_tree` VALUES ('1', '23');
 INSERT INTO `role_associate_tree` VALUES ('1', '24');
 INSERT INTO `role_associate_tree` VALUES ('1', '25');
+INSERT INTO `role_associate_tree` VALUES ('1', '26');
+
+-- ----------------------------
+-- Table structure for `t_dining_table`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_dining_table`;
+CREATE TABLE `t_dining_table` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '桌号流水',
+  `name` varchar(50) DEFAULT NULL COMMENT '桌名',
+  `state` varchar(2) DEFAULT NULL COMMENT '状态（1：待使用；2：使用中；3：维护中）',
+  `image` varchar(50) DEFAULT NULL COMMENT '图片地址',
+  `crt_date` datetime DEFAULT NULL COMMENT '创建时间',
+  `crt_user` varchar(50) DEFAULT NULL COMMENT '创建人',
+  `crt_user_id` int(11) DEFAULT NULL COMMENT '创建人流水ID',
+  `dining_describe` varchar(200) DEFAULT NULL COMMENT '描述',
+  `note` varchar(200) DEFAULT NULL COMMENT '备注',
+  `order_id` int(11) DEFAULT NULL COMMENT '订单ID',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='餐桌维护';
+
+-- ----------------------------
+-- Records of t_dining_table
+-- ----------------------------
+INSERT INTO `t_dining_table` VALUES ('1', '中和殿', '1', '/images/desk/02.jpg', '2017-11-14 10:18:07', 'linzf', '1', '中和殿介绍', '中和殿备注', '1');
+INSERT INTO `t_dining_table` VALUES ('2', '保和殿', '1', '/images/desk/03.jpg', '2017-11-14 10:22:27', 'linzf', '1', '保和殿介绍', '保和殿备注', null);
+INSERT INTO `t_dining_table` VALUES ('3', '乾清宫', '1', '/images/desk/04.jpg', '2017-11-14 10:22:42', 'linzf', '1', '乾清宫', '乾清宫', '5');
+INSERT INTO `t_dining_table` VALUES ('4', '交泰殿', '1', '/images/desk/05.jpg', '2017-11-14 10:22:59', 'linzf', '1', '交泰殿', '交泰殿', null);
+INSERT INTO `t_dining_table` VALUES ('5', '坤宁宫', '1', '/images/desk/06.jpg', '2017-11-14 10:23:14', 'linzf', '1', '坤宁宫', '坤宁宫', '6');
+INSERT INTO `t_dining_table` VALUES ('6', '储秀宫', '1', '/images/desk/07.jpg', '2017-11-14 10:23:29', 'linzf', '1', '储秀宫', '储秀宫', null);
+INSERT INTO `t_dining_table` VALUES ('7', '养心殿', '1', '/images/desk/08.jpg', '2017-11-14 10:23:44', 'linzf', '1', '养心殿', '养心殿', null);
 
 -- ----------------------------
 -- Table structure for `t_dinner`
@@ -162,12 +199,32 @@ CREATE TABLE `t_dinner` (
   `preferential_price` double DEFAULT NULL COMMENT '优惠价格',
   `is_preferential` varchar(2) DEFAULT NULL COMMENT '是否优惠（1：是；2：否）',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='主要保存菜品信息';
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COMMENT='主要保存菜品信息';
 
 -- ----------------------------
 -- Records of t_dinner
 -- ----------------------------
-INSERT INTO `t_dinner` VALUES ('3', '饺子', '3', '肉品', '53', '0', '1111', '2017-11-09 10:30:12', 'linzf', '1', '48', '1');
+INSERT INTO `t_dinner` VALUES ('3', '饺子', '3', '肉品', '53', '0', '/images/2.jpg', '2017-11-14 11:45:06', 'linzf', '1', '48', '1');
+INSERT INTO `t_dinner` VALUES ('4', '红烧肉', '3', '肉品', '80', '0', '/images/1.jpg', '2017-11-14 11:45:08', 'linzf', '1', '80', '1');
+INSERT INTO `t_dinner` VALUES ('5', '清炒苦瓜', '5', '蔬菜', '12', '0', '/images/18.jpg', '2017-11-14 11:45:09', 'linzf', '1', '12', '1');
+INSERT INTO `t_dinner` VALUES ('6', '爆炒猪耳', '3', '肉品', '30', '0', '/images/2.jpg', '2017-11-14 11:45:12', 'linzf', '1', '30', '1');
+INSERT INTO `t_dinner` VALUES ('7', '爆炒牛肉', '3', '肉品', '45', '0', '/images/4.jpg', '2017-11-14 11:45:15', 'linzf', '1', '45', '1');
+INSERT INTO `t_dinner` VALUES ('8', '红烧猪肋', '3', '肉品', '25', '0', '/images/5.jpg', '2017-11-14 11:45:17', 'linzf', '1', '25', '1');
+INSERT INTO `t_dinner` VALUES ('9', '爆炒肉肠', '3', '肉品', '18', '0', '/images/6.jpg', '2017-11-14 11:45:18', 'linzf', '1', '18', '1');
+INSERT INTO `t_dinner` VALUES ('10', '红烧鲫鱼', '4', '水产', '30', '0', '/images/7.jpg', '2017-11-14 11:45:20', 'linzf', '1', '30', '1');
+INSERT INTO `t_dinner` VALUES ('11', '油闷大虾', '4', '水产', '60', '0', '/images/8.jpg', '2017-11-14 11:45:22', 'linzf', '1', '60', '1');
+INSERT INTO `t_dinner` VALUES ('12', '海鲜盛宴', '4', '水产', '168', '0', '/images/9.jpg', '2017-11-14 11:45:24', 'linzf', '1', '168', '1');
+INSERT INTO `t_dinner` VALUES ('13', '炒上海青', '5', '蔬菜', '8', '0', '/images/13.jpg', '2017-11-14 11:45:25', 'linzf', '1', '8', '1');
+INSERT INTO `t_dinner` VALUES ('14', '炒毛豆', '5', '蔬菜', '8', '0', '/images/17.jpg', '2017-11-14 11:45:27', 'linzf', '1', '8', '1');
+INSERT INTO `t_dinner` VALUES ('15', '白米饭', '6', '干粮杂货', '2', '0', '/images/21.jpg', '2017-11-14 11:45:31', 'linzf', '1', '2', '1');
+INSERT INTO `t_dinner` VALUES ('16', '黑米饭', '6', '干粮杂货', '2', '0', '/images/22.jpg', '2017-11-14 11:45:32', 'linzf', '1', '2', '1');
+INSERT INTO `t_dinner` VALUES ('17', '黄米饭', '6', '干粮杂货', '2', '0', '/images/23.jpg', '2017-11-14 11:45:34', 'linzf', '1', '2', '1');
+INSERT INTO `t_dinner` VALUES ('18', '米糕', '7', '糕点', '5', '0', '/images/24.jpg', '2017-11-14 11:45:35', 'linzf', '1', '5', '1');
+INSERT INTO `t_dinner` VALUES ('19', '红米糕', '7', '糕点', '5', '0', '/images/26.jpg', '2017-11-14 11:45:37', 'linzf', '1', '5', '1');
+INSERT INTO `t_dinner` VALUES ('20', '蓝米糕', '7', '糕点', '5', '0', '/images/25.jpg', '2017-11-14 11:45:39', 'linzf', '1', '5', '1');
+INSERT INTO `t_dinner` VALUES ('21', '慕斯', '7', '糕点', '6', '0', '/images/25.jpg', '2017-11-14 11:45:41', 'linzf', '1', '6', '1');
+INSERT INTO `t_dinner` VALUES ('22', '爆炒花蛤', '4', '水产', '16', '0', '/images/10.jpg', '2017-11-14 11:45:43', 'linzf', '1', '16', '1');
+INSERT INTO `t_dinner` VALUES ('23', '青瓜炒蛋', '5', '蔬菜', '9', '0', '/images/16.jpg', '2017-11-14 11:45:45', 'linzf', '1', '9', '1');
 
 -- ----------------------------
 -- Table structure for `t_food_type`
@@ -193,7 +250,7 @@ INSERT INTO `t_food_type` VALUES ('7', '糕点');
 -- ----------------------------
 DROP TABLE IF EXISTS `t_order`;
 CREATE TABLE `t_order` (
-  `id` int(11) NOT NULL COMMENT '订单流水ID',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '订单流水ID',
   `order_num` varchar(50) DEFAULT NULL COMMENT '订单编号',
   `order_price` double DEFAULT NULL COMMENT '订单价格',
   `real_income` double DEFAULT NULL COMMENT '实际收入',
@@ -209,12 +266,14 @@ CREATE TABLE `t_order` (
   `score` int(11) DEFAULT NULL COMMENT '产生积分',
   `note` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='主要用于保存用户下的订单的信息';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='主要用于保存用户下的订单的信息';
 
 -- ----------------------------
 -- Records of t_order
 -- ----------------------------
-INSERT INTO `t_order` VALUES ('1', '201711101648', '550', '550', '1', '海通上合', '2017-11-09 16:42:31', '2', '林泽锋', '1', '林瑾', '1', '2017-11-10 16:47:21', '550', '下次给优惠这个顾客');
+INSERT INTO `t_order` VALUES ('1', '201711101648', '1188', '550', '1', '海通上合', '2017-11-09 16:42:31', '1', '林泽锋', '1', '林瑾', '1', '2017-11-10 16:47:21', '550', '下次给优惠这个顾客');
+INSERT INTO `t_order` VALUES ('5', '20171115163000603', '230', null, '3', '乾清宫', '2017-11-15 16:30:01', '1', '福建好运联联', '2', null, '0', '2017-11-15 16:23:40', '0', null);
+INSERT INTO `t_order` VALUES ('6', '20171115164051680', '26', null, '5', '坤宁宫', '2017-11-15 16:40:52', '1', '福建好运联联', '2', null, '0', '2017-11-15 16:34:31', '0', null);
 
 -- ----------------------------
 -- Table structure for `t_order_detail`
@@ -233,14 +292,46 @@ CREATE TABLE `t_order_detail` (
   `is_preferential` varchar(2) DEFAULT NULL COMMENT '是否优惠（1：是；2：否）',
   `order_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '下单时间',
   `state` varchar(2) DEFAULT '1' COMMENT '状态（1：正常；2：撤单）',
+  `type` varchar(2) DEFAULT NULL COMMENT '点餐类型（1：正常；2：加菜）',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='主要用于存放用户的点餐明细';
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8 COMMENT='主要用于存放用户的点餐明细';
 
 -- ----------------------------
 -- Records of t_order_detail
 -- ----------------------------
-INSERT INTO `t_order_detail` VALUES ('1', '1', '1', '100', '4', '#', '肉类', '小鸡炖蘑菇', '100', '1', '2017-11-10 15:56:24', '2');
-INSERT INTO `t_order_detail` VALUES ('2', '1', '1', '50', '3', '#', '菜类', '炒白菜', '50', '1', '2017-11-10 09:38:33', '1');
+INSERT INTO `t_order_detail` VALUES ('1', '1', '1', '100', '4', '#', '肉类', '小鸡炖蘑菇', '100', '1', '2017-11-10 15:56:24', '2', '1');
+INSERT INTO `t_order_detail` VALUES ('2', '1', '1', '50', '3', '#', '菜类', '炒白菜', '50', '1', '2017-11-10 09:38:33', '1', '1');
+INSERT INTO `t_order_detail` VALUES ('3', '3', '1', '53', '1', '/images/2.jpg', '肉品', '饺子', '48', '1', '2017-11-15 15:06:52', '1', '2');
+INSERT INTO `t_order_detail` VALUES ('4', '4', '1', '80', '1', '/images/1.jpg', '肉品', '红烧肉', '80', '1', '2017-11-15 15:06:52', '1', '2');
+INSERT INTO `t_order_detail` VALUES ('5', '3', '1', '53', '1', '/images/2.jpg', '肉品', '饺子', '48', '1', '2017-11-15 15:13:38', '1', '2');
+INSERT INTO `t_order_detail` VALUES ('6', '4', '1', '80', '1', '/images/1.jpg', '肉品', '红烧肉', '80', '1', '2017-11-15 15:13:38', '1', '2');
+INSERT INTO `t_order_detail` VALUES ('7', '6', '1', '30', '1', '/images/2.jpg', '肉品', '爆炒猪耳', '30', '1', '2017-11-15 15:25:03', '1', '2');
+INSERT INTO `t_order_detail` VALUES ('8', '8', '1', '25', '2', '/images/5.jpg', '肉品', '红烧猪肋', '25', '1', '2017-11-15 15:25:03', '1', '2');
+INSERT INTO `t_order_detail` VALUES ('9', '9', '1', '18', '3', '/images/6.jpg', '肉品', '爆炒肉肠', '18', '1', '2017-11-15 15:25:03', '1', '2');
+INSERT INTO `t_order_detail` VALUES ('10', '5', '1', '12', '1', '/images/18.jpg', '蔬菜', '清炒苦瓜', '12', '1', '2017-11-15 15:25:49', '1', '2');
+INSERT INTO `t_order_detail` VALUES ('11', '13', '1', '8', '1', '/images/13.jpg', '蔬菜', '炒上海青', '8', '1', '2017-11-15 15:25:49', '1', '2');
+INSERT INTO `t_order_detail` VALUES ('12', '14', '1', '8', '1', '/images/17.jpg', '蔬菜', '炒毛豆', '8', '1', '2017-11-15 15:25:49', '1', '2');
+INSERT INTO `t_order_detail` VALUES ('13', '15', '1', '2', '1', '/images/21.jpg', '干粮杂货', '白米饭', '2', '1', '2017-11-15 15:25:49', '1', '2');
+INSERT INTO `t_order_detail` VALUES ('14', '16', '1', '2', '1', '/images/22.jpg', '干粮杂货', '黑米饭', '2', '1', '2017-11-15 15:25:49', '1', '2');
+INSERT INTO `t_order_detail` VALUES ('15', '17', '1', '2', '1', '/images/23.jpg', '干粮杂货', '黄米饭', '2', '1', '2017-11-15 15:25:49', '1', '2');
+INSERT INTO `t_order_detail` VALUES ('16', '18', '1', '5', '1', '/images/24.jpg', '糕点', '米糕', '5', '1', '2017-11-15 15:25:49', '1', '2');
+INSERT INTO `t_order_detail` VALUES ('17', '19', '1', '5', '1', '/images/26.jpg', '糕点', '红米糕', '5', '1', '2017-11-15 15:25:49', '1', '2');
+INSERT INTO `t_order_detail` VALUES ('18', '20', '1', '5', '1', '/images/25.jpg', '糕点', '蓝米糕', '5', '1', '2017-11-15 15:25:49', '1', '2');
+INSERT INTO `t_order_detail` VALUES ('19', '21', '1', '6', '1', '/images/25.jpg', '糕点', '慕斯', '6', '1', '2017-11-15 15:25:49', '1', '2');
+INSERT INTO `t_order_detail` VALUES ('20', '23', '1', '9', '1', '/images/16.jpg', '蔬菜', '青瓜炒蛋', '9', '1', '2017-11-15 15:25:49', '1', '2');
+INSERT INTO `t_order_detail` VALUES ('21', '7', '1', '45', '1', '/images/4.jpg', '肉品', '爆炒牛肉', '45', '1', '2017-11-15 15:29:16', '1', '2');
+INSERT INTO `t_order_detail` VALUES ('22', '3', '1', '53', '1', '/images/2.jpg', '肉品', '饺子', '48', '1', '2017-11-15 15:32:19', '1', '2');
+INSERT INTO `t_order_detail` VALUES ('23', '9', '1', '18', '1', '/images/6.jpg', '肉品', '爆炒肉肠', '18', '1', '2017-11-15 15:32:33', '1', '2');
+INSERT INTO `t_order_detail` VALUES ('24', '3', '1', '53', '1', '/images/2.jpg', '肉品', '饺子', '48', '1', '2017-11-15 15:34:18', '1', '2');
+INSERT INTO `t_order_detail` VALUES ('25', '8', '1', '25', '1', '/images/5.jpg', '肉品', '红烧猪肋', '25', '1', '2017-11-15 15:34:27', '1', '2');
+INSERT INTO `t_order_detail` VALUES ('37', '4', '5', '80', '1', '/images/1.jpg', '肉品', '红烧肉', '80', '1', '2017-11-15 16:30:01', '1', '1');
+INSERT INTO `t_order_detail` VALUES ('38', '7', '5', '45', '1', '/images/4.jpg', '肉品', '爆炒牛肉', '45', '1', '2017-11-15 16:30:01', '1', '1');
+INSERT INTO `t_order_detail` VALUES ('39', '8', '5', '25', '1', '/images/5.jpg', '肉品', '红烧猪肋', '25', '1', '2017-11-15 16:30:01', '1', '1');
+INSERT INTO `t_order_detail` VALUES ('40', '4', '5', '80', '1', '/images/1.jpg', '肉品', '红烧肉', '80', '1', '2017-11-15 16:40:15', '1', '2');
+INSERT INTO `t_order_detail` VALUES ('41', '18', '6', '5', '1', '/images/24.jpg', '糕点', '米糕', '5', '1', '2017-11-15 16:40:52', '1', '1');
+INSERT INTO `t_order_detail` VALUES ('42', '19', '6', '5', '2', '/images/26.jpg', '糕点', '红米糕', '5', '1', '2017-11-15 16:40:52', '1', '1');
+INSERT INTO `t_order_detail` VALUES ('43', '20', '6', '5', '1', '/images/25.jpg', '糕点', '蓝米糕', '5', '1', '2017-11-15 16:40:52', '1', '1');
+INSERT INTO `t_order_detail` VALUES ('44', '21', '6', '6', '1', '/images/25.jpg', '糕点', '慕斯', '6', '1', '2017-11-15 16:40:52', '1', '1');
 
 -- ----------------------------
 -- Table structure for `tree`
@@ -256,7 +347,7 @@ CREATE TABLE `tree` (
   `url` varchar(255) DEFAULT NULL,
   `state` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tree
@@ -271,6 +362,7 @@ INSERT INTO `tree` VALUES ('17', 'sysManager', 'fa fa-fw fa-desktop', '菜单维
 INSERT INTO `tree` VALUES ('23', 'foodTypeManager', 'fa fa-fw fa-tree', '菜品维护', '17', '1', 'foodTypeList', '1');
 INSERT INTO `tree` VALUES ('24', 'dinerListManager', 'fa fa-fw fa-book', '菜单管理', '17', '2', '/dinerList', '1');
 INSERT INTO `tree` VALUES ('25', 'orderManager', 'fa fa-fw fa-book', '订单管理', '17', '3', 'orderList', '1');
+INSERT INTO `tree` VALUES ('26', 'diningTableManager', 'fa fa-fw fa-tree', '餐桌维护', '17', '4', '/diningTableList', '1');
 
 -- ----------------------------
 -- Table structure for `user`
@@ -300,8 +392,8 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', 'hyll', '140b6ce18716153fba3bf98a52722bd5', 'linzf', '福建省福州市晋安区铜盘路29号超大大厦', '餐饮小兵', '10', null, '福州市', '晋安区', '福建省', '铜盘路29号超大大厦', '1', '1', '2017-11-10 16:46:55');
-INSERT INTO `user` VALUES ('2', 'hyll144', '140b6ce18716153fba3bf98a52722bd5', '福建好运联联', '北京市北京市市辖区东城区阿道夫的辐射大', '餐饮小兵', '10', null, '北京市市辖区', '东城区', '北京市', '阿道夫的辐射大', '1', '1', null);
+INSERT INTO `user` VALUES ('1', 'hyll', '140b6ce18716153fba3bf98a52722bd5', 'linzf', '福建省福州市晋安区铜盘路29号超大大厦', '餐饮小兵', '10', null, '福州市', '晋安区', '福建省', '铜盘路29号超大大厦', '1', '1', '2017-11-15 16:30:13');
+INSERT INTO `user` VALUES ('2', 'hyll144', '140b6ce18716153fba3bf98a52722bd5', '福建好运联联', '北京市北京市市辖区东城区阿道夫的辐射大', '餐饮小兵', '10', null, '北京市市辖区', '东城区', '北京市', '阿道夫的辐射大', '1', '1', '2017-11-15 16:29:53');
 INSERT INTO `user` VALUES ('9', 'linzhefeng23', '140b6ce18716153fba3bf98a52722bd5', '林泽锋', '福建省福州市晋安区秀山路188号', '餐饮主管', '10', null, '福州市', '晋安区', '福建省', '秀山路188号', '0', '1', null);
 INSERT INTO `user` VALUES ('20', 'linzf1', '140b6ce18716153fba3bf98a52722bd5', 'linzf2', '福建省福州市晋安区linzf12', 'linzf2', '9', null, '福州市', '晋安区', '福建省', 'linzf12', '1', null, null);
 
@@ -323,9 +415,9 @@ CREATE TABLE `user_associate_role` (
 -- ----------------------------
 INSERT INTO `user_associate_role` VALUES ('20', '1');
 INSERT INTO `user_associate_role` VALUES ('9', '2');
-INSERT INTO `user_associate_role` VALUES ('2', '2');
 INSERT INTO `user_associate_role` VALUES ('1', '1');
 INSERT INTO `user_associate_role` VALUES ('1', '2');
+INSERT INTO `user_associate_role` VALUES ('2', '3');
 
 -- ----------------------------
 -- Table structure for `user_role`
@@ -336,10 +428,11 @@ CREATE TABLE `user_role` (
   `name` varchar(255) DEFAULT NULL,
   `role_name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_role
 -- ----------------------------
 INSERT INTO `user_role` VALUES ('1', 'ROLE_ADMIN', '系统管理员');
 INSERT INTO `user_role` VALUES ('2', 'ROLE_USER', '普通用户');
+INSERT INTO `user_role` VALUES ('3', 'ROLE_DINER', '点菜人员');
