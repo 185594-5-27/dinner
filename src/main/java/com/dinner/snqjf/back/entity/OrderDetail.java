@@ -1,5 +1,6 @@
 package com.dinner.snqjf.back.entity;
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  *@author linzf
@@ -31,7 +32,7 @@ public class OrderDetail {
 	//是否优惠（1：是；2：否） 
 	private String isPreferential;
 	//下单时间 
-	private Timestamp orderTime;
+	private Date orderTime;
 	// （1：正常；2：撤单）
 	private String state;
 	//点餐类型（1：正常；2：加菜）
@@ -133,11 +134,11 @@ public class OrderDetail {
 		this.isPreferential = isPreferential;
 	}
 
-	public Timestamp getOrderTime() {
+	public Date getOrderTime() {
 		return orderTime;
 	}
 
-	public void setOrderTime(Timestamp orderTime) {
+	public void setOrderTime(Date orderTime) {
 		this.orderTime = orderTime;
 	}
 

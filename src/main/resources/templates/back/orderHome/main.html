@@ -51,7 +51,7 @@
         <div class="container" id="J_order_list">
         </div>
         <div class="container" id="J_pick_order_list">
-            asdaskjd
+
         </div>
     </section>
     <section class="oder_submit">
@@ -175,7 +175,10 @@
 
     var pickOrderMoney = 0;
 
+    var orderId = 0;
+
     var iG = iG||{};
+    /**
     if(window.localStorage){
         try{
             iG = JSON.parse(localStorage["zaiG"])||{};
@@ -186,6 +189,7 @@
     }else{
         iG = iG||{};
     }
+     */
     $(function(){
         setTimeout(function () { window.scrollTo(0, 1); }, 0);
 
@@ -221,7 +225,12 @@
                  if(e.result){
                      $("#J_pick_order_list").html(buildPickOrder(e.data));
                      for(var i in e.data){
-                         pickOrderMoney = pickOrderMoney + e.data[i].price * e.data[i].num;
+                         if(e.data[i].isPreferential=='1'){
+                             pickOrderMoney = pickOrderMoney + e.data[i].preferentialPrice * e.data[i].num;
+                         }else{
+                             pickOrderMoney = pickOrderMoney + e.data[i].price * e.data[i].num;
+                         }
+                         orderId = e.data[i].orderId;
                      }
                  }
                 $("#J_order_list").html(buildOrder(iG.order));
@@ -327,9 +336,39 @@
             $("#form_info").toggle("normal","linear");
 
         });
+        // 提交订单
         $("#submitOrder").click(function(){
-            $(".viewer:visible").removeClass("show").addClass("hide");
-            $("#submitView").removeClass("hide").addClass("show");
+            var pick = false;
+            var orderDetail = "[";
+            for(var i in iG.order){
+                if(pick==false){
+                    orderDetail = orderDetail + "{id:"+iG.order[i].id+",num:"+iG.order[i].counter+"}"
+                }else{
+                    orderDetail = orderDetail + ",{id:"+iG.order[i].id+",num:"+iG.order[i].counter+"}";
+                }
+                pick = true;
+            }
+            orderDetail = orderDetail + "]";
+            if(!pick){
+                window.Ewin.alert({message:'您还没有点菜，请先点菜以后再提交订单!'});
+                return false;
+            }
+            // 提交订单数据
+            $.post("/orderHome/submitOrder",{
+                id:[[${entity.id}]],
+                orderId:orderId,
+                orderDetail:orderDetail
+            },function(e){
+                if(e.result==true){
+                    window.Ewin.confirm({title:'提示',message:'订单提交成功!是否跳转到点餐主页,还是继续加菜？',width:500}).on(function (result) {
+                        if (result) {
+                            window.document.location = "/diningTable";
+                        }else{
+                            window.document.location.reload();
+                        }
+                    });
+                }
+            })
         })
         $("#cancelSubmit").click(function(){
             $(".viewer:visible").removeClass("show").addClass("hide");
@@ -392,7 +431,11 @@
     function countPrice(){
         var price = 0;
         for(var i in iG.order){
-            price += Number(iG.order[i].price)*iG.order[i].counter;
+            if(iG.order[i].isPreferential=='1'){
+                price += Number(iG.order[i].preferentialPrice)*iG.order[i].counter;
+            }else {
+                price += Number(iG.order[i].price)*iG.order[i].counter;
+            }
         }
         return price+pickOrderMoney;
     }
@@ -429,7 +472,11 @@
         for(var i in _list){
             if(_list[i].counter === 0)continue;
             check = false;
-            result += "<div class=\"row gray_line\"><div class=\"col-md-12 clearfix board_content\"><div class=\"col-xs-6\"><div class=\"col-md-6 clearfix order_item_name\"><label>"+_list[i].name+"</label></div><div class=\"col-md-6 clearfix order_price\">"+_list[i].price+"元一例</div></div><div class=\"col-xs-6\"><div class=\"btn_wrap counter\"><button class=\"list_minus counter_minus fl\" style=\"display: inline-block;\" data_id=\""+_list[i].id+"\" ontouchstart=\"\"><strong></strong></button><i class=\"nocounter fl\" style=\"display: inline-block;\">"+_list[i].counter+"</i><button class=\"list_add counter_plus\" data_id=\""+_list[i].id+"\" ontouchstart=\"\"><strong></strong></button><em class=\"fixBig  fake\"></em></div></div></div></div>";
+            if(_list[i].isPreferential=='1'){
+                result += "<div class=\"row gray_line\"><div class=\"col-md-12 clearfix board_content\"><div class=\"col-xs-6\"><div class=\"col-md-6 clearfix order_item_name\"><label>"+_list[i].name+"</label></div><div class=\"col-md-6 clearfix order_price\">"+_list[i].preferentialPrice+"元一例</div></div><div class=\"col-xs-6\"><div class=\"btn_wrap counter\"><button class=\"list_minus counter_minus fl\" style=\"display: inline-block;\" data_id=\""+_list[i].id+"\" ontouchstart=\"\"><strong></strong></button><i class=\"nocounter fl\" style=\"display: inline-block;\">"+_list[i].counter+"</i><button class=\"list_add counter_plus\" data_id=\""+_list[i].id+"\" ontouchstart=\"\"><strong></strong></button><em class=\"fixBig  fake\"></em></div></div></div></div>";
+            }else{
+                result += "<div class=\"row gray_line\"><div class=\"col-md-12 clearfix board_content\"><div class=\"col-xs-6\"><div class=\"col-md-6 clearfix order_item_name\"><label>"+_list[i].name+"</label></div><div class=\"col-md-6 clearfix order_price\">"+_list[i].price+"元一例</div></div><div class=\"col-xs-6\"><div class=\"btn_wrap counter\"><button class=\"list_minus counter_minus fl\" style=\"display: inline-block;\" data_id=\""+_list[i].id+"\" ontouchstart=\"\"><strong></strong></button><i class=\"nocounter fl\" style=\"display: inline-block;\">"+_list[i].counter+"</i><button class=\"list_add counter_plus\" data_id=\""+_list[i].id+"\" ontouchstart=\"\"><strong></strong></button><em class=\"fixBig  fake\"></em></div></div></div></div>";
+            }
         }
         if(check){
             result += "<div class=\"row gray_line\"><div class=\"col-md-12 clearfix board_content\"><p style=\"text-align: center;\"><span>亲，还没选到心仪的菜喔，点加菜开始选菜吧！</span></p></div></div>";
@@ -441,8 +488,20 @@
     function buildPickOrder(data){
         var result = "<div class=\"row\" id=\"J_order_Manager\"><div class=\"col-xs-12 clearfix board_content\"><div class=\"col-xs-4 title_contain\"><p class=\"menu_title \">已点菜单</p></div><div class=\"col-xs-2\"></div></div></div>";
         var check = false;
+        var addDishText = "";
+        var addDishTime = "";
         for(var i in data){
-            result += "<div class=\"row gray_line\"><div class=\"col-md-12 clearfix board_content\"><div class=\"col-xs-6\"><div class=\"col-md-6 clearfix order_item_name\"><label>"+data[i].name+"</label></div><div class=\"col-md-6 clearfix order_price\">"+data[i].price+"元一例</div></div><div class=\"col-xs-6\"><div class=\"btn_wrap counter\"><i class=\"nocounter fl\" style=\"display: inline-block;\">"+data[i].num+"</i></div></div></div></div>";
+            if(data[i].type=='2'){
+                addDishText = "【加菜】";
+            }else{
+                addDishText = "";
+            }
+            addDishTime =  "【"+new Date(data[i].orderTime).format('yyyy-MM-dd hh:mm:ss')+"】";
+            if(data[i].isPreferential=='1'){
+                result += "<div class=\"row gray_line\"><div class=\"col-md-12 clearfix board_content\"><div class=\"col-xs-6\"><div class=\"col-md-6 clearfix order_item_name\"><label>"+data[i].name+"</label></div><div class=\"col-md-8 clearfix order_price\">"+data[i].preferentialPrice+"元一例"+addDishText+"&nbsp;"+addDishTime+"</div></div><div class=\"col-xs-4\"><div class=\"btn_wrap counter\"><i class=\"nocounter fl\" style=\"display: inline-block;\">"+data[i].num+"</i></div></div></div></div>";
+            }else{
+                result += "<div class=\"row gray_line\"><div class=\"col-md-12 clearfix board_content\"><div class=\"col-xs-6\"><div class=\"col-md-6 clearfix order_item_name\"><label>"+data[i].name+"</label></div><div class=\"col-md-6 clearfix order_price\">"+data[i].price+"元一例"+addDishText+"&nbsp;"+addDishTime+"</div></div><div class=\"col-xs-6\"><div class=\"btn_wrap counter\"><i class=\"nocounter fl\" style=\"display: inline-block;\">"+data[i].num+"</i></div></div></div></div>";
+            }
             check = true;
         }
         if(!check) {

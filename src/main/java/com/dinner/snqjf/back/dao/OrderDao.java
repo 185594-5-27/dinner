@@ -11,6 +11,13 @@ import com.dinner.snqjf.back.entity.QueryOrder;
 public interface OrderDao extends GenericDao<Order, QueryOrder> {
 
     /**
+     * 功能描述：加菜的时候更新订单金额
+     * @param entity
+     * @return
+     */
+    public int updateOrderByAddDish(Order entity);
+
+    /**
      * 功能描述：实现结账功能
      * @param entity
      * @return

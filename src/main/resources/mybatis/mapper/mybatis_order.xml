@@ -19,6 +19,11 @@
 		<result property="note" column="note"/>
 	</resultMap>
 
+	<!-- 更新订单消费金额 -->
+	<update id="updateOrderByAddDish" parameterType="com.dinner.snqjf.back.entity.Order">
+		update t_order set order_price = #{orderPrice} where id = #{id}
+	</update>
+
 	<!-- 取消订单 -->
 	<update id="cancelOrder"  parameterType="com.dinner.snqjf.back.entity.Order">
         update t_order set state=#{state},consume_time=#{consumeTime},note=#{note} where id = #{id}
@@ -36,9 +41,9 @@
 	</select>
 
 	<!--保存-->
-	<insert id="save" parameterType="com.dinner.snqjf.back.entity.Order">
-		INSERT INTO t_order(id,order_num,order_price,real_income,table_num,private_room,order_time,state,order_user,order_user_id,consume_user,consume_user_id,consume_time,score,note)
-		VALUES(#{id},#{orderNum},#{orderPrice},#{realIncome},#{tableNum},#{privateRoom},#{orderTime},#{state},#{orderUser},#{orderUserId},#{consumeUser},#{consumeUserId},#{consumeTime},#{score},#{note})
+	<insert id="save" parameterType="com.dinner.snqjf.back.entity.Order" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_order(order_num,order_price,real_income,table_num,private_room,order_time,state,order_user,order_user_id,consume_user,consume_user_id,consume_time,score,note)
+		VALUES(#{orderNum},#{orderPrice},#{realIncome},#{tableNum},#{privateRoom},#{orderTime},#{state},#{orderUser},#{orderUserId},#{consumeUser},#{consumeUserId},#{consumeTime},#{score},#{note})
 	</insert>
 
 	<!--修改-->

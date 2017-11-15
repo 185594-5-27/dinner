@@ -32,6 +32,16 @@ public class DiningTable {
 	private String note;
 	// 订单ID
 	private int orderId;
+	// 订单明细数据
+	private String orderDetail;
+
+	public String getOrderDetail() {
+		return orderDetail;
+	}
+
+	public void setOrderDetail(String orderDetail) {
+		this.orderDetail = orderDetail;
+	}
 
 	public int getOrderId() {
 		return orderId;

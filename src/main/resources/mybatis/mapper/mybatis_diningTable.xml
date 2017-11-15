@@ -14,6 +14,11 @@
 		<result property="orderId" column="order_id"/>
 	</resultMap>
 
+	<!-- 新增订单的时候更新餐桌的订单ID -->
+	<update id="updateDiningTableOrder"  parameterType="com.dinner.snqjf.back.entity.DiningTable">
+		UPDATE t_dining_table SET order_id = #{orderId} where id = #{id}
+	</update>
+
 	<!--根据主键获取对象-->
 	<select id="get" parameterType="com.dinner.snqjf.back.entity.DiningTable" resultMap="DiningTableMap">
 		SELECT id,name,state,image,crt_date,crt_user,crt_user_id,dining_describe,note,order_id FROM t_dining_table

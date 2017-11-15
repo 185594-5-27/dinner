@@ -3,6 +3,7 @@ package com.dinner.snqjf.back.controller;
 import com.dinner.snqjf.back.entity.*;
 import com.dinner.snqjf.back.service.*;
 import com.dinner.snqjf.common.base.constant.SystemStaticConst;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -12,8 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /*
 * 类描述：实现点菜员在线点菜
@@ -38,6 +38,29 @@ public class OrderHomeController {
 
     @Inject
     private OrderDetailService orderDetailService;
+
+    @Inject
+    private OrderHomeService orderHomeService;
+
+    /**
+     * 功能描述：提交订单数据
+     *
+     * @return
+     */
+    @RequestMapping(value = "/submitOrder",  method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Map<String, Object> submitOrder(DiningTable entity) throws Exception {
+        Map<String, Object> result = new HashMap<String, Object>();
+        if(orderHomeService.submitOrder(entity)){
+            result.put(SystemStaticConst.RESULT,SystemStaticConst.SUCCESS);
+            result.put(SystemStaticConst.MSG,"下单成功！");
+        }else{
+            result.put(SystemStaticConst.RESULT,SystemStaticConst.FAIL);
+            result.put(SystemStaticConst.MSG,"下单失败！");
+        }
+        return result;
+    }
+
     /**
      * 功能描述：根据桌号来获取订单数据
      *
@@ -105,5 +128,6 @@ public class OrderHomeController {
         result.put("data",jobj.toString());
         return result;
     }
+
 
 }
