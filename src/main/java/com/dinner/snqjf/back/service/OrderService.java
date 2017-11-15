@@ -1,6 +1,8 @@
 package com.dinner.snqjf.back.service;
 
+import com.dinner.snqjf.back.dao.DiningTableDao;
 import com.dinner.snqjf.back.dao.OrderDao;
+import com.dinner.snqjf.back.entity.DiningTable;
 import com.dinner.snqjf.back.entity.Order;
 import com.dinner.snqjf.back.entity.QueryOrder;
 import com.dinner.snqjf.common.base.dao.GenericDao;
@@ -20,6 +22,9 @@ public class OrderService extends GenericService<Order, QueryOrder> {
 	@Autowired
 	@SuppressWarnings("SpringJavaAutowiringInspection")
 	private OrderDao orderDao;
+	@Autowired
+	@SuppressWarnings("SpringJavaAutowiringInspection")
+	private DiningTableDao diningTableDao;
 
 	@Override
 	protected GenericDao<Order, QueryOrder> getDao() {
@@ -34,6 +39,9 @@ public class OrderService extends GenericService<Order, QueryOrder> {
 	public boolean checkout(Order entity){
 		entity.setConsumeTime(new Date());
 		entity.setState(Order.STATE_READY_PAY);
+		// 更新餐桌数据
+		DiningTable diningTable = new DiningTable(entity.getId());
+		diningTableDao.completeOrderDiningTable(diningTable);
 		return orderDao.checkout(entity)>0;
 	}
 
@@ -45,6 +53,9 @@ public class OrderService extends GenericService<Order, QueryOrder> {
 	public boolean cancelOrder(Order entity){
 		entity.setConsumeTime(new Date());
 		entity.setState(Order.STATE_CANCEL_ORDER);
+		// 更新餐桌数据
+		DiningTable diningTable = new DiningTable(entity.getId());
+		diningTableDao.completeOrderDiningTable(diningTable);
 		return orderDao.cancelOrder(entity)>0;
 	}
 }

@@ -90,6 +90,15 @@
                             return "无优惠";
                         }
                     }
+                },{
+                    field: 'state',
+                    title: '明细状态',
+                    align: 'center',
+                    valign: 'middle',
+                    sortable: true,
+                    formatter: function (value, row, index) {
+                        return getCodeDictText("ORDER_DETAIL_STATE",value);
+                    }
                 },
                 {
                     field: 'orderTime',

@@ -11,6 +11,11 @@ public class OrderDetail {
 	// 没有优惠
 	public static final String ORDER_DETAIL_NO_PREFERENTIAL = "2";
 
+	// 明细正常下单
+	public static final String STATE_NORMAL = "1";
+	// 明细撤单
+	public static final String STATE_CANCEL = "2";
+
 	//点餐列表流水ID 
 	private int id;
 	//菜单ID 

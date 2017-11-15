@@ -14,6 +14,11 @@
 		<result property="orderId" column="order_id"/>
 	</resultMap>
 
+	<!-- 订单结账或者撤单的时候更新餐桌的订单的ID来恢复餐桌的订餐 -->
+	<update id="completeOrderDiningTable" parameterType="com.dinner.snqjf.back.entity.DiningTable">
+		update t_dining_table set order_id = null where order_id = #{orderId}
+	</update>
+
 	<!-- 新增订单的时候更新餐桌的订单ID -->
 	<update id="updateDiningTableOrder"  parameterType="com.dinner.snqjf.back.entity.DiningTable">
 		UPDATE t_dining_table SET order_id = #{orderId} where id = #{id}

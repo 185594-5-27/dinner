@@ -53,7 +53,7 @@ public class OrderController extends GenericController<Order, QueryOrder> {
 	}
 
 	/**
-	 * 功能描述：实现订单的结账处理
+	 * 功能描述：实现订单的撤单处理
 	 * @param entity
 	 * @return
 	 */
@@ -102,6 +102,9 @@ public class OrderController extends GenericController<Order, QueryOrder> {
 		orderDetail.setOrderId(entity.getId());
 		int orderPrice = 0;
 		for(OrderDetail o:orderDetailService.getOrderDetailByOrderId(orderDetail)){
+			if(o.getState().equalsIgnoreCase(OrderDetail.STATE_CANCEL)){
+				continue;
+			}
             if(o.getIsPreferential().equalsIgnoreCase(OrderDetail.ORDER_DETAIL_HAS_PREFERENTIAL)){
 				orderPrice = orderPrice + o.getNum() * Integer.parseInt(o.getPreferentialPrice());
 			}else{

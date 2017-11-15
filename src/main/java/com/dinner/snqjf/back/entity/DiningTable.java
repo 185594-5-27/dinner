@@ -1,126 +1,135 @@
 package com.dinner.snqjf.back.entity;
+
 import java.util.Date;
 
 /**
- *@author linzf
+ * @author linzf
  **/
 public class DiningTable {
-	// 待使用
-	public static final String STATE_WAIT_USE = "1";
-	// 使用中
-	public static final String STATE_USE = "1";
-	// 维护中
-	public static final String STATE_MAINTENANCE  = "1";
+    // 待使用
+    public static final String STATE_WAIT_USE = "1";
+    // 使用中
+    public static final String STATE_USE = "1";
+    // 维护中
+    public static final String STATE_MAINTENANCE = "1";
 
-	//桌号流水 
-	private int id;
-	//桌名 
-	private String name;
-	//状态（1：待使用；2：使用中；3：维护中）
-	private String state;
-	//图片地址 
-	private String image;
-	//创建时间 
-	private Date crtDate;
-	//创建人 
-	private String crtUser;
-	//创建人流水ID 
-	private int crtUserId;
-	//描述 
-	private String diningDescribe;
-	//备注 
-	private String note;
-	// 订单ID
-	private int orderId;
-	// 订单明细数据
-	private String orderDetail;
+    public DiningTable() {
+        super();
+    }
 
-	public String getOrderDetail() {
-		return orderDetail;
-	}
+    public DiningTable(int orderId) {
+        this.orderId = orderId;
+    }
 
-	public void setOrderDetail(String orderDetail) {
-		this.orderDetail = orderDetail;
-	}
+    //桌号流水
+    private int id;
+    //桌名
+    private String name;
+    //状态（1：待使用；2：使用中；3：维护中）
+    private String state;
+    //图片地址
+    private String image;
+    //创建时间
+    private Date crtDate;
+    //创建人
+    private String crtUser;
+    //创建人流水ID
+    private int crtUserId;
+    //描述
+    private String diningDescribe;
+    //备注
+    private String note;
+    // 订单ID
+    private int orderId;
+    // 订单明细数据
+    private String orderDetail;
 
-	public int getOrderId() {
-		return orderId;
-	}
+    public String getOrderDetail() {
+        return orderDetail;
+    }
 
-	public void setOrderId(int orderId) {
-		this.orderId = orderId;
-	}
+    public void setOrderDetail(String orderDetail) {
+        this.orderDetail = orderDetail;
+    }
 
-	public int getId() {
-		return id;
-	}
+    public int getOrderId() {
+        return orderId;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public String getState() {
-		return state;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setState(String state) {
-		this.state = state;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getImage() {
-		return image;
-	}
+    public String getState() {
+        return state;
+    }
 
-	public void setImage(String image) {
-		this.image = image;
-	}
+    public void setState(String state) {
+        this.state = state;
+    }
 
-	public Date getCrtDate() {
-		return crtDate;
-	}
+    public String getImage() {
+        return image;
+    }
 
-	public void setCrtDate(Date crtDate) {
-		this.crtDate = crtDate;
-	}
+    public void setImage(String image) {
+        this.image = image;
+    }
 
-	public String getCrtUser() {
-		return crtUser;
-	}
+    public Date getCrtDate() {
+        return crtDate;
+    }
 
-	public void setCrtUser(String crtUser) {
-		this.crtUser = crtUser;
-	}
+    public void setCrtDate(Date crtDate) {
+        this.crtDate = crtDate;
+    }
 
-	public int getCrtUserId() {
-		return crtUserId;
-	}
+    public String getCrtUser() {
+        return crtUser;
+    }
 
-	public void setCrtUserId(int crtUserId) {
-		this.crtUserId = crtUserId;
-	}
+    public void setCrtUser(String crtUser) {
+        this.crtUser = crtUser;
+    }
 
-	public String getDiningDescribe() {
-		return diningDescribe;
-	}
+    public int getCrtUserId() {
+        return crtUserId;
+    }
 
-	public void setDiningDescribe(String diningDescribe) {
-		this.diningDescribe = diningDescribe;
-	}
+    public void setCrtUserId(int crtUserId) {
+        this.crtUserId = crtUserId;
+    }
 
-	public String getNote() {
-		return note;
-	}
+    public String getDiningDescribe() {
+        return diningDescribe;
+    }
 
-	public void setNote(String note) {
-		this.note = note;
-	}
+    public void setDiningDescribe(String diningDescribe) {
+        this.diningDescribe = diningDescribe;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
 
 }

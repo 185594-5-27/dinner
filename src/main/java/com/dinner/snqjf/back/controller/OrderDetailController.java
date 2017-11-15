@@ -48,6 +48,9 @@ public class OrderDetailController extends GenericController<OrderDetail, QueryO
 	@RequestMapping(value = "/toOrderDetail",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
 	public ModelAndView toOrderDetail(Order entity) throws Exception{
 		entity = orderService.get(entity);
+		if(entity.getNote()==null){
+			entity.setNote("");
+		}
 		return new ModelAndView("/back/orderDetail/orderDetail","entity",entity);
 	}
 }

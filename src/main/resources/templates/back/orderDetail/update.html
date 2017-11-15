@@ -2,6 +2,7 @@
 <body>
 <form id="orderDetailForm" role="form" method="post" action="orderDetail/update">
     <input type="hidden" name="id" id="id" th:value="${entity.id}"/>
+    <input type="hidden" name="orderId"  th:value="${entity.orderId}"/>
     <div class="form-group">
         <label>菜品类型:</label>
         <label style="font-size: 18px;color: red;" th:text="${entity.goodTypeName}"></label>
