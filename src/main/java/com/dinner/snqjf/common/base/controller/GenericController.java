@@ -8,6 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
+import com.dinner.codeUtil.GenCodeUtil;
 import com.dinner.snqjf.common.base.constant.SystemStaticConst;
 import com.dinner.snqjf.common.base.entity.Page;
 import com.dinner.snqjf.common.base.entity.QueryBase;
@@ -46,9 +47,10 @@ public abstract class GenericController<T, Q extends QueryBase> {
 			if(m.find()){
 				basePath = m.group();
 				basePath = basePath.substring(1, basePath.length()-10);
-				basePath = basePath.toLowerCase();
 				basePath = basePath.replace(".", "/");
 				basePath = basePath.replace("/controller/", "/");
+				basePath = GenCodeUtil.toFirstCharLowerCase(basePath);
+				basePath = basePath.substring(0,basePath.lastIndexOf("/")+1)+GenCodeUtil.toFirstCharLowerCase(basePath.substring(basePath.lastIndexOf("/")+1));
 			}
 			else{
 				throw new Exception("获取页面基路径失败");

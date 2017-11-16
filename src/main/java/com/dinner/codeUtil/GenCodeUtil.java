@@ -205,7 +205,7 @@ public class GenCodeUtil {
 	 * @param str
 	 * @return
 	 */
-	private static String toFirstCharLowerCase(String str){
+	public static String toFirstCharLowerCase(String str){
 		char[]  columnCharArr = str.toCharArray();
 		StringBuffer sb = new StringBuffer();
 		for (int i = 0; i < columnCharArr.length; i++) {
