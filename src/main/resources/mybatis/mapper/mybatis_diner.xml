@@ -16,6 +16,11 @@
 		<result property="isPreferential" column="is_preferential"/>
 	</resultMap>
 
+	<!--更新菜单的销量数据-->
+	<update id="updateDinerSel"  parameterType="com.dinner.snqjf.back.entity.Diner">
+		UPDATE t_dinner set sels = sels + #{sels} where id = #{id}
+	</update>
+
 	<!--根据主键获取对象-->
 	<select id="get" parameterType="com.dinner.snqjf.back.entity.Diner" resultMap="DinerMap">
 		SELECT id,name,good_type_id,good_type_name,price,sels,image_url,create_time,create_user,create_user_id,preferential_price,is_preferential FROM t_dinner 

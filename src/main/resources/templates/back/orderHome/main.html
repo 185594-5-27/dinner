@@ -396,13 +396,13 @@
                         if (e.result == true) {
                             window.Ewin.confirm({
                                 title: '提示',
-                                message: '订单提交成功!是否跳转到点餐主页,还是继续加菜？',
+                                message: '订单提交成功!继续加菜选择确定，跳转到主页选择取消！',
                                 width: 500
                             }).on(function (result) {
                                 if (result) {
-                                    window.document.location = "/diningTable";
-                                } else {
                                     window.document.location.reload();
+                                } else {
+                                    window.document.location = "/diningTable";
                                 }
                             });
                         }

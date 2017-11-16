@@ -10,5 +10,10 @@ import com.dinner.snqjf.back.entity.QueryDiner;
  **/
 public interface DinerDao extends GenericDao<Diner, QueryDiner> {
 
-	
+    /**
+     * 功能描述：更新菜单的销量数据
+     * @param diner
+     * @return
+     */
+    int updateDinerSel(Diner diner);
 }

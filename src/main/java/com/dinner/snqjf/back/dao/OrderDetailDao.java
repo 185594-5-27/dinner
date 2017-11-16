@@ -17,6 +17,6 @@ public interface OrderDetailDao extends GenericDao<OrderDetail, QueryOrderDetail
      * @param entity
      * @return
      */
-    public List<OrderDetail> getOrderDetailByOrderId(OrderDetail entity);
+     List<OrderDetail> getOrderDetailByOrderId(OrderDetail entity);
 	
 }

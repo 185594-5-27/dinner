@@ -6,6 +6,16 @@ import java.util.Date;
  *@author linzf
  **/
 public class Diner {
+
+	public Diner(){
+		super();
+	}
+
+	public Diner(int id,int sels){
+		this.id = id;
+		this.sels = sels;
+	}
+
 	//菜单流水ID 
 	private int id;
 	//菜名 

@@ -16,6 +16,14 @@ public class OrderDetail {
 	// 明细撤单
 	public static final String STATE_CANCEL = "2";
 
+	public OrderDetail(){
+		super();
+	}
+
+	public OrderDetail(int orderId){
+		this.orderId = orderId;
+	}
+
 	//点餐列表流水ID 
 	private int id;
 	//菜单ID 
