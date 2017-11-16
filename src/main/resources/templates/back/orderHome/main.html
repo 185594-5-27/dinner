@@ -23,6 +23,9 @@
         <button id="myOrder" class="btn_change">
             订单预览
         </button>
+        <button id="homeBack" class="btn_change">
+            回到主页
+        </button>
     </footer>
 </div>
 <div id="wrapper2" class="viewer wrapper countpage clearfix" style="display:none">
@@ -61,6 +64,11 @@
             </button>
         </div>
     </section>
+    <footer class="footFix footLeft">
+        <button id="orderBack" class="btn_change">
+            回到主页
+        </button>
+    </footer>
 </div>
 <div id="imgViewer" class="viewer" style="display:none">
     <div class="container">
@@ -192,6 +200,14 @@
      */
     $(function(){
         setTimeout(function () { window.scrollTo(0, 1); }, 0);
+
+        $("body").on("click","#homeBack",function(){
+            window.document.location = "/diningTable";
+        });
+
+        $("body").on("click","#orderBack",function(){
+            window.document.location = "/diningTable";
+        });
 
         // 异步加载菜单数据
         $.post("/orderHome/loadDiner",function(e){
