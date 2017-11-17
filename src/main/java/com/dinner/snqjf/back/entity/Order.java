@@ -44,7 +44,16 @@ public class Order {
     private int score;
     // 备注
     private String note;
+    // 消费人手机号
+    private String consumeUserPhone;
 
+    public String getConsumeUserPhone() {
+        return consumeUserPhone;
+    }
+
+    public void setConsumeUserPhone(String consumeUserPhone) {
+        this.consumeUserPhone = consumeUserPhone;
+    }
 
     public String getNote() {
         return note;

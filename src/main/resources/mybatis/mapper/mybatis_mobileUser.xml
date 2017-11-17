@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dinner.snqjf.back.dao.MobileUserDao">
+	<resultMap type="com.dinner.snqjf.back.entity.MobileUser" id="MobileUserMap">
+		<id property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="phone" column="phone"/>
+		<result property="pass" column="pass"/>
+		<result property="score" column="score"/>
+		<result property="createTime" column="create_time"/>
+		<result property="sex" column="sex"/>
+		<result property="age" column="age"/>
+		<result property="consumeTime" column="consume_time"/>
+		<result property="consumeMoney" column="consume_money"/>
+		<result property="token" column="token"/>
+		<result property="lastLoginTime" column="last_login_time"/>
+	</resultMap>
+
+	<!--根据主键获取对象-->
+	<select id="get" parameterType="com.dinner.snqjf.back.entity.MobileUser" resultMap="MobileUserMap">
+		SELECT id,name,phone,pass,score,create_time,sex,age,consume_time,consume_money,token,last_login_time FROM t_mobile_user 
+		WHERE id=#{id}
+	</select>
+
+	<!--保存-->
+	<insert id="save" parameterType="com.dinner.snqjf.back.entity.MobileUser" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_mobile_user(name,phone,pass,score,create_time,sex,age,consume_time,consume_money,token,last_login_time)
+		VALUES(#{name},#{phone},#{pass},#{score},#{createTime},#{sex},#{age},#{consumeTime},#{consumeMoney},#{token},#{lastLoginTime})
+	</insert>
+
+	<!--修改-->
+	<update id="update" parameterType="com.dinner.snqjf.back.entity.MobileUser">
+		UPDATE t_mobile_user SET name=#{name},pass=#{pass},sex=#{sex},age=#{age}
+		WHERE id=#{id}
+	</update>
+
+	<!--删除-->
+	<delete id="delete" parameterType="com.dinner.snqjf.back.entity.MobileUser">
+		 DELETE FROM t_mobile_user WHERE id=#{id}
+	</delete>
+
+	<!--分页查询-->
+	<select id="findByPage" parameterType="com.dinner.snqjf.back.entity.QueryMobileUser" resultMap="MobileUserMap">
+		SELECT id,name,phone,pass,score,create_time,sex,age,consume_time,consume_money,token,last_login_time FROM t_mobile_user
+		WHERE 1=1
+		<if test="name!=null and name!='' "  >
+		AND name=#{name}
+		</if>
+		<if test="phone!=null and phone!='' "  >
+		AND phone=#{phone}
+		</if>
+		<if test="pass!=null and pass!='' "  >
+		AND pass=#{pass}
+		</if>
+		<if test="score!=null and score!='' "  >
+		AND score=#{score}
+		</if>
+		<if test="createTime!=null and createTime!='' "  >
+		AND create_time=#{createTime}
+		</if>
+		<if test="sex!=null and sex!='' "  >
+		AND sex=#{sex}
+		</if>
+		<if test="age!=null and age!='' "  >
+		AND age=#{age}
+		</if>
+		<if test="consumeTime!=null and consumeTime!='' "  >
+		AND consume_time=#{consumeTime}
+		</if>
+		<if test="consumeMoney!=null and consumeMoney!='' "  >
+		AND consume_money=#{consumeMoney}
+		</if>
+		<if test="token!=null and token!='' "  >
+		AND token=#{token}
+		</if>
+		<if test="lastLoginTime!=null and lastLoginTime!='' "  >
+		AND last_login_time=#{lastLoginTime}
+		</if>
+		<if test="sort!= null">
+		order by ${sort} ${order}
+		</if>
+		limit #{offset},#{limit}
+	</select>
+
+	<!--统计-->
+	<select id="count" parameterType="com.dinner.snqjf.back.entity.QueryMobileUser" resultType="int">
+		SELECT count(*) FROM t_mobile_user
+		WHERE 1=1
+		<if test="name!=null and name!='' ">
+		AND name=#{name}
+		</if>
+		<if test="phone!=null and phone!='' ">
+		AND phone=#{phone}
+		</if>
+		<if test="pass!=null and pass!='' ">
+		AND pass=#{pass}
+		</if>
+		<if test="score!=null and score!='' ">
+		AND score=#{score}
+		</if>
+		<if test="createTime!=null and createTime!='' ">
+		AND create_time=#{createTime}
+		</if>
+		<if test="sex!=null and sex!='' ">
+		AND sex=#{sex}
+		</if>
+		<if test="age!=null and age!='' ">
+		AND age=#{age}
+		</if>
+		<if test="consumeTime!=null and consumeTime!='' ">
+		AND consume_time=#{consumeTime}
+		</if>
+		<if test="consumeMoney!=null and consumeMoney!='' ">
+		AND consume_money=#{consumeMoney}
+		</if>
+		<if test="token!=null and token!='' ">
+		AND token=#{token}
+		</if>
+		<if test="lastLoginTime!=null and lastLoginTime!='' ">
+		AND last_login_time=#{lastLoginTime}
+		</if>
+	</select>
+
+	<!--查询-->
+	<select id="query" parameterType="com.dinner.snqjf.back.entity.QueryMobileUser" resultMap="MobileUserMap">
+		SELECT id,name,phone,pass,score,create_time,sex,age,consume_time,consume_money,token,last_login_time FROM t_mobile_user
+		WHERE 1=1
+		<if test="name!=null and name!='' ">
+		AND name=#{name}
+		</if>
+		<if test="phone!=null and phone!='' ">
+		AND phone=#{phone}
+		</if>
+		<if test="pass!=null and pass!='' ">
+		AND pass=#{pass}
+		</if>
+		<if test="score!=null and score!='' ">
+		AND score=#{score}
+		</if>
+		<if test="createTime!=null and createTime!='' ">
+		AND create_time=#{createTime}
+		</if>
+		<if test="sex!=null and sex!='' ">
+		AND sex=#{sex}
+		</if>
+		<if test="age!=null and age!='' ">
+		AND age=#{age}
+		</if>
+		<if test="consumeTime!=null and consumeTime!='' ">
+		AND consume_time=#{consumeTime}
+		</if>
+		<if test="consumeMoney!=null and consumeMoney!='' ">
+		AND consume_money=#{consumeMoney}
+		</if>
+		<if test="token!=null and token!='' ">
+		AND token=#{token}
+		</if>
+		<if test="lastLoginTime!=null and lastLoginTime!='' ">
+		AND last_login_time=#{lastLoginTime}
+		</if>
+		<if test="sort!= null">
+		order by ${sort} ${order}
+		</if>
+	</select>
+</mapper>

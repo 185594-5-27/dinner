@@ -64,6 +64,8 @@ public class OrderService extends GenericService<Order, QueryOrder> {
 		orderMap.forEach((k,v)->{
 			dinerDao.updateDinerSel(new Diner(k,v));
 		});
+		// 更新用户的积分
+
 		return orderDao.checkout(entity)>0;
 	}
 
