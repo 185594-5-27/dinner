@@ -5,6 +5,15 @@ import java.util.Date;
  *@author linzf
  **/
 public class MobileUser {
+
+	public MobileUser(){
+		super();
+	}
+
+	public MobileUser(String phone){
+		this.phone = phone;
+	}
+
 	//点餐用户流水ID 
 	private int id;
 	//名字 

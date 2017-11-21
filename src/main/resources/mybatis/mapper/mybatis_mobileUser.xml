@@ -16,6 +16,16 @@
 		<result property="lastLoginTime" column="last_login_time"/>
 	</resultMap>
 
+	<!-- 更新用户积分 -->
+	<update id="updateUserScore" parameterType="com.dinner.snqjf.back.entity.MobileUser">
+		update t_mobile_user set score = #{score} where id=#{id}
+	</update>
+
+	<!--  根据用户电话来获取用户信息 -->
+	<select id="getUserByPhone" parameterType="com.dinner.snqjf.back.entity.MobileUser" resultMap="MobileUserMap">
+		select * from t_mobile_user where phone = #{phone}
+	</select>
+
 	<!--根据主键获取对象-->
 	<select id="get" parameterType="com.dinner.snqjf.back.entity.MobileUser" resultMap="MobileUserMap">
 		SELECT id,name,phone,pass,score,create_time,sex,age,consume_time,consume_money,token,last_login_time FROM t_mobile_user 

@@ -78,7 +78,7 @@ public class OrderController extends GenericController<Order, QueryOrder> {
 	 */
 	@RequestMapping(value = "/checkout",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Map<String,Object> checkout(Order entity){
+	public Map<String,Object> checkout(Order entity) throws Exception {
 		Map<String,Object> result = new HashMap<String, Object>();
 		if(orderService.checkout(entity)){
 			result.put(SystemStaticConst.RESULT,SystemStaticConst.SUCCESS);

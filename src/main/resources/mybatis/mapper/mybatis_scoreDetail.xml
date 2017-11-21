@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dinner.snqjf.back.dao.ScoreDetailDao">
+	<resultMap type="com.dinner.snqjf.back.entity.ScoreDetail" id="ScoreDetailMap">
+		<id property="id" column="id"/>
+		<result property="orderId" column="order_id"/>
+		<result property="userId" column="user_id"/>
+		<result property="type" column="type"/>
+		<result property="createTime" column="create_time"/>
+		<result property="score" column="score"/>
+		<result property="orderNo" column="order_no"/>
+		<result property="userName" column="user_name"/>
+	</resultMap>
+
+	<!--根据主键获取对象-->
+	<select id="get" parameterType="com.dinner.snqjf.back.entity.ScoreDetail" resultMap="ScoreDetailMap">
+		SELECT id,order_id,user_id,type,create_time,score,order_no,user_name FROM t_score_detail 
+		WHERE id=#{id}
+	</select>
+
+	<!--保存-->
+	<insert id="save" parameterType="com.dinner.snqjf.back.entity.ScoreDetail" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_score_detail(order_id,user_id,type,create_time,score,order_no,user_name)
+		VALUES(#{orderId},#{userId},#{type},#{createTime},#{score},#{orderNo},#{userName})
+	</insert>
+
+	<!--修改-->
+	<update id="update" parameterType="com.dinner.snqjf.back.entity.ScoreDetail">
+		UPDATE t_score_detail SET order_id=#{orderId},user_id=#{userId},type=#{type},create_time=#{createTime},score=#{score},order_no=#{orderNo},user_name=#{userName}
+		WHERE id=#{id}
+	</update>
+
+	<!--删除-->
+	<delete id="delete" parameterType="com.dinner.snqjf.back.entity.ScoreDetail">
+		 DELETE FROM t_score_detail WHERE id=#{id}
+	</delete>
+
+	<!--分页查询-->
+	<select id="findByPage" parameterType="com.dinner.snqjf.back.entity.QueryScoreDetail" resultMap="ScoreDetailMap">
+		SELECT id,order_id,user_id,type,create_time,score,order_no,user_name FROM t_score_detail
+		WHERE 1=1
+		<if test="orderId!=null and orderId!='' "  >
+		AND order_id=#{orderId}
+		</if>
+		<if test="userId!=null and userId!='' "  >
+		AND user_id=#{userId}
+		</if>
+		<if test="type!=null and type!='' "  >
+		AND type=#{type}
+		</if>
+		<if test="createTime!=null and createTime!='' "  >
+		AND create_time=#{createTime}
+		</if>
+		<if test="score!=null and score!='' "  >
+		AND score=#{score}
+		</if>
+		<if test="orderNo!=null and orderNo!='' "  >
+		AND order_no like concat(#{orderNo},'%')
+		</if>
+		<if test="userName!=null and userName!='' "  >
+		AND user_name like concat(#{userName},'%')
+		</if>
+		<if test="sort!= null">
+		order by ${sort} ${order}
+		</if>
+		limit #{offset},#{limit}
+	</select>
+
+	<!--统计-->
+	<select id="count" parameterType="com.dinner.snqjf.back.entity.QueryScoreDetail" resultType="int">
+		SELECT count(*) FROM t_score_detail
+		WHERE 1=1
+		<if test="orderId!=null and orderId!='' ">
+		AND order_id=#{orderId}
+		</if>
+		<if test="userId!=null and userId!='' ">
+		AND user_id=#{userId}
+		</if>
+		<if test="type!=null and type!='' ">
+		AND type=#{type}
+		</if>
+		<if test="createTime!=null and createTime!='' ">
+		AND create_time=#{createTime}
+		</if>
+		<if test="score!=null and score!='' ">
+		AND score=#{score}
+		</if>
+		<if test="orderNo!=null and orderNo!='' "  >
+			AND order_no like concat(#{orderNo},'%')
+		</if>
+		<if test="userName!=null and userName!='' "  >
+			AND user_name like concat(#{userName},'%')
+		</if>
+	</select>
+
+	<!--查询-->
+	<select id="query" parameterType="com.dinner.snqjf.back.entity.QueryScoreDetail" resultMap="ScoreDetailMap">
+		SELECT id,order_id,user_id,type,create_time,score,order_no,user_name FROM t_score_detail
+		WHERE 1=1
+		<if test="orderId!=null and orderId!='' ">
+		AND order_id=#{orderId}
+		</if>
+		<if test="userId!=null and userId!='' ">
+		AND user_id=#{userId}
+		</if>
+		<if test="type!=null and type!='' ">
+		AND type=#{type}
+		</if>
+		<if test="createTime!=null and createTime!='' ">
+		AND create_time=#{createTime}
+		</if>
+		<if test="score!=null and score!='' ">
+		AND score=#{score}
+		</if>
+		<if test="orderNo!=null and orderNo!='' "  >
+			AND order_no like concat(#{orderNo},'%')
+		</if>
+		<if test="userName!=null and userName!='' "  >
+			AND user_name like concat(#{userName},'%')
+		</if>
+		<if test="sort!= null">
+		order by ${sort} ${order}
+		</if>
+	</select>
+</mapper>

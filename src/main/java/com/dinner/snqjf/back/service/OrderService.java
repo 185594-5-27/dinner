@@ -1,9 +1,6 @@
 package com.dinner.snqjf.back.service;
 
-import com.dinner.snqjf.back.dao.DinerDao;
-import com.dinner.snqjf.back.dao.DiningTableDao;
-import com.dinner.snqjf.back.dao.OrderDao;
-import com.dinner.snqjf.back.dao.OrderDetailDao;
+import com.dinner.snqjf.back.dao.*;
 import com.dinner.snqjf.back.entity.*;
 import com.dinner.snqjf.common.base.dao.GenericDao;
 import com.dinner.snqjf.common.base.service.GenericService;
@@ -34,6 +31,12 @@ public class OrderService extends GenericService<Order, QueryOrder> {
 	@Autowired
 	@SuppressWarnings("SpringJavaAutowiringInspection")
 	private DinerDao dinerDao;
+	@Autowired
+	@SuppressWarnings("SpringJavaAutowiringInspection")
+	private MobileUserDao mobileUserDao;
+	@Autowired
+	@SuppressWarnings("SpringJavaAutowiringInspection")
+	private ScoreDetailDao scoreDetailDao;
 
 	@Override
 	protected GenericDao<Order, QueryOrder> getDao() {
@@ -45,7 +48,7 @@ public class OrderService extends GenericService<Order, QueryOrder> {
 	 * @param entity
 	 * @return
 	 */
-	public boolean checkout(Order entity){
+	public boolean checkout(Order entity) throws Exception {
 		entity.setConsumeTime(new Date());
 		entity.setState(Order.STATE_READY_PAY);
 		// 更新餐桌数据
@@ -64,7 +67,25 @@ public class OrderService extends GenericService<Order, QueryOrder> {
 		orderMap.forEach((k,v)->{
 			dinerDao.updateDinerSel(new Diner(k,v));
 		});
-		// 更新用户的积分
+		// 更新用户的积分并保存用户积分流水数据
+		if(entity.getConsumeUserPhone()!=null&&!entity.getConsumeUserPhone().equalsIgnoreCase("")){
+			MobileUser mobileUser = mobileUserDao.getUserByPhone(new MobileUser(entity.getConsumeUserPhone()));
+			if(mobileUser!=null){
+				// 增加用户积分
+				ScoreDetail scoreDetail = new ScoreDetail();
+				scoreDetail.setCreateTime(new Date());
+				scoreDetail.setOrderId(entity.getId());
+				scoreDetail.setOrderNo(entity.getOrderNum());
+				scoreDetail.setScore(entity.getScore());
+				scoreDetail.setType(ScoreDetail.ADD_TYPE);
+				scoreDetail.setUserId(mobileUser.getId());
+				scoreDetail.setUserName(mobileUser.getName());
+				scoreDetailDao.save(scoreDetail);
+				// 更新用户积分
+				mobileUser.setScore(mobileUser.getScore()+entity.getScore());
+				mobileUserDao.updateUserScore(mobileUser);
+			}
+		}
 
 		return orderDao.checkout(entity)>0;
 	}
