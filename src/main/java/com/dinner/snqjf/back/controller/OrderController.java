@@ -37,6 +37,11 @@ public class OrderController extends GenericController<Order, QueryOrder> {
 		return orderService;
 	}
 
+	@RequestMapping(value = "/toOrderDetailPrint",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	public String toOrderDetailPrint() throws Exception {
+		return getPageBaseRoot()+"/orderDetailPrint";
+	}
+
 	/**
 	 * 功能描述：根据订单号来查找订单消费明细
 	 * @param entity
