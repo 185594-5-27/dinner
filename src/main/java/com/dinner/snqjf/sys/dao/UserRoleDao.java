@@ -10,5 +10,12 @@ import com.dinner.snqjf.sys.entity.QueryUserRole;
  *@author linzf
  **/
 public interface UserRoleDao extends GenericDao<UserRole, QueryUserRole> {
+
+    /**
+     * 功能描述：获取权限菜单数据
+     * @param entity
+     * @return
+     */
+    UserRole getUserRoleAssociate(UserRole entity);
 	
 }

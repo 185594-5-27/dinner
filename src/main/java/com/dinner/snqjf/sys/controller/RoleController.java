@@ -52,14 +52,16 @@ public class RoleController extends GenericController<UserRole,QueryUserRole> {
     @RequestMapping(value = "/loadRoleTree",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Map<String,Object> loadRoleTree(UserRole entity){
-        entity = userRoleService.get(entity);
+        entity = userRoleService.getUserRoleAssociate(entity);
         List<Tree> treeList = treeService.query(null);
-        for(Tree tree:entity.getTreeList()){
-            treeList.stream().forEach(t->{
-                if(t.getId()==tree.getId()){
-                    t.setChecked(true);
-                }
-            });
+        if(entity!=null){
+            for(Tree tree:entity.getTreeList()){
+                treeList.stream().forEach(t->{
+                    if(t.getId()==tree.getId()){
+                        t.setChecked(true);
+                    }
+                });
+            }
         }
         Map<String,Object> result = new HashMap<String, Object>();
         result.put(SystemStaticConst.RESULT, SystemStaticConst.SUCCESS);

@@ -35,6 +35,15 @@ public class UserRoleService extends GenericService<UserRole, QueryUserRole> {
 	}
 
 	/**
+	 * 功能描述：获取权限菜单数据
+	 * @param entity
+	 * @return
+	 */
+	public UserRole getUserRoleAssociate(UserRole entity){
+		return userRoleDao.getUserRoleAssociate(entity);
+	}
+
+	/**
 	 * 功能描述：删除角色数据
 	 * @param entityList
 	 * @return
