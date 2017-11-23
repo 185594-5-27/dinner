@@ -13,21 +13,9 @@
                 *********************
             </td>
         </tr>
-        <tr style="height: 50px;">
-            <td width="100px;">红烧猪蹄</td>
-            <td>2</td>
-        </tr>
-        <tr style="height: 50px;">
-            <td width="100px;">清炖白蛇</td>
-            <td>1</td>
-        </tr>
-        <tr style="height: 50px;">
-            <td width="100px;">海鲜盛宴</td>
-            <td>2</td>
-        </tr>
-        <tr style="height: 50px;">
-            <td width="100px;">雄霸天下</td>
-            <td>2</td>
+        <tr style="height: 50px;" th:each="orderDetail : ${data}">
+            <td th:text="${orderDetail.name}"></td>
+            <td th:text="${orderDetail.num}"></td>
         </tr>
         <tr style="height: 50px;">
             <td colspan="2">
@@ -35,14 +23,10 @@
             </td>
         </tr>
         <tr style="height: 50px;">
-            <td colspan="2">
-                下单时间：2017-11-12 20:03
-            </td>
+            <td colspan="2" th:text='${"下单时间："+date}'></td>
         </tr>
         <tr style="height: 50px;">
-            <td colspan="2">
-                下单人员：林泽锋
-            </td>
+            <td colspan="2" th:text='${"下单人员："+order.orderUser}'></td>
         </tr>
         <tr style="height: 50px;">
             <td colspan="2">
@@ -68,7 +52,7 @@
 </div>
 <script th:inline="javascript">
     $(function () {
-        window.print();
+       // window.print();
     });
 </script>
 </body>

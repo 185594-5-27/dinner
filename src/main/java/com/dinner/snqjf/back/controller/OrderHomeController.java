@@ -3,6 +3,7 @@ package com.dinner.snqjf.back.controller;
 import com.dinner.snqjf.back.entity.*;
 import com.dinner.snqjf.back.service.*;
 import com.dinner.snqjf.common.base.constant.SystemStaticConst;
+import com.dinner.snqjf.sys.service.WebsocketService;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.http.MediaType;
@@ -42,6 +43,9 @@ public class OrderHomeController {
     @Inject
     private OrderHomeService orderHomeService;
 
+    @Inject
+    private WebsocketService websocketService;
+
     /**
      * 功能描述：提交订单数据
      *
@@ -51,7 +55,14 @@ public class OrderHomeController {
     @ResponseBody
     public Map<String, Object> submitOrder(DiningTable entity) throws Exception {
         Map<String, Object> result = new HashMap<String, Object>();
-        if(orderHomeService.submitOrder(entity)){
+        String orderId = entity.getOrderId()+"";
+        entity = orderHomeService.submitOrder(entity);
+        if(entity!=null){
+            if(orderId.equalsIgnoreCase("0")){
+                orderId = entity.getOrderId()+"";
+            }
+            // 下单成功，推送消息到前端来实现订单明细的打印功能
+            websocketService.printOrder(orderId,entity.getOrderDetailId());
             result.put(SystemStaticConst.RESULT,SystemStaticConst.SUCCESS);
             result.put(SystemStaticConst.MSG,"下单成功！");
         }else{

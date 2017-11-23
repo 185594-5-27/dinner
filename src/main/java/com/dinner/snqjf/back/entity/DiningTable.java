@@ -1,6 +1,7 @@
 package com.dinner.snqjf.back.entity;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author linzf
@@ -43,6 +44,16 @@ public class DiningTable {
     private int orderId;
     // 订单明细数据
     private String orderDetail;
+    // 保存订单明细的流水ID
+    private String orderDetailId = "";
+
+    public String getOrderDetailId() {
+        return orderDetailId;
+    }
+
+    public void setOrderDetailId(String orderDetailId) {
+        this.orderDetailId = orderDetailId;
+    }
 
     public String getOrderDetail() {
         return orderDetail;

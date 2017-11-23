@@ -10,7 +10,10 @@
         options.stompClienturl = '/ricky/topic/greetings';
         options.login = [[${#authentication.name}]];
         options.success = function(greeting){
-            alert( JSON.parse(greeting.body).content);
+            var r = eval("("+JSON.parse(greeting.body).content+")")
+            if(r.type=='1'){// 推送的消息是打印菜单的信息
+                window.open("/order/toOrderDetailPrint?orderId="+r.orderId+"&orderDetailId="+r.orderDetailId);
+            }
            // $("#greetings").append("<tr><td>" + JSON.parse(greeting.body).content + "</td></tr>");
         }
         $.fn.socketConnect(options);

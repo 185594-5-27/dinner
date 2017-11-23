@@ -2,9 +2,12 @@ package com.dinner.snqjf.back.controller;
 
 import javax.inject.Inject;
 
+import com.dinner.snqjf.back.entity.DiningTable;
 import com.dinner.snqjf.back.entity.OrderDetail;
 import com.dinner.snqjf.back.service.OrderDetailService;
 import com.dinner.snqjf.common.base.constant.SystemStaticConst;
+import com.dinner.snqjf.common.util.date.DateUtil;
+import com.dinner.snqjf.sys.service.WebsocketService;
 import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,9 +21,7 @@ import com.dinner.snqjf.back.service.OrderService;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  *@author linzf
@@ -32,13 +33,24 @@ public class OrderController extends GenericController<Order, QueryOrder> {
 	private OrderService orderService;
 	@Inject
 	private OrderDetailService orderDetailService;
+
 	@Override
 	protected GenericService<Order, QueryOrder> getService() {
 		return orderService;
 	}
 
 	@RequestMapping(value = "/toOrderDetailPrint",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-	public String toOrderDetailPrint() throws Exception {
+	public String toOrderDetailPrint(DiningTable entity, Model model) throws Exception {
+		Order order = orderService.get(new Order(entity.getOrderId()));
+		List<OrderDetail> orderDetailList = new ArrayList<OrderDetail>();
+		for(String orderDetailId:entity.getOrderDetailId().split(",")){
+			OrderDetail orderDetail = new OrderDetail();
+			orderDetail.setId(Integer.parseInt(orderDetailId));
+			orderDetailList.add(orderDetailService.get(orderDetail));
+		}
+		model.addAttribute("data",orderDetailList);
+		model.addAttribute("order",order);
+		model.addAttribute("date", DateUtil.format(new Date(),"yyyy-MM-dd HH:mm:ss"));
 		return getPageBaseRoot()+"/orderDetailPrint";
 	}
 

@@ -95,7 +95,7 @@ public class User implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return this.getUserName();
+		return this.getLogin();
 	}
 
 	@Override

@@ -14,6 +14,15 @@ public class Order {
     // 取消订单
     public static final String STATE_CANCEL_ORDER = "3";
 
+    public Order(){
+        super();
+    }
+
+    public Order(int id){
+        this.id = id;
+    }
+
+
     //订单流水ID
     private int id;
     //订单编号

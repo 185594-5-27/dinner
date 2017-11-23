@@ -46,8 +46,7 @@ public class OrderHomeService {
     @SuppressWarnings("SpringJavaAutowiringInspection")
     private DiningTableDao diningTableDao;
 
-    public boolean submitOrder(DiningTable entity) throws Exception {
-        boolean success = true;
+    public DiningTable submitOrder(DiningTable entity) throws Exception {
         List<OrderDetail> orderDetailList = this.getOrderDetail(entity);
         // 订单ID不为0说明是加菜
         if(entity.getOrderId()!=0){
@@ -57,6 +56,11 @@ public class OrderHomeService {
             order.setOrderPrice((Double.parseDouble(order.getOrderPrice())+this.countOrderDetail(orderDetailList))+"");
             for(OrderDetail orderDetail:orderDetailList){
                 orderDetailDao.save(orderDetail);
+                if(entity.getOrderDetailId().equals("")){
+                    entity.setOrderDetailId(orderDetail.getId()+"");
+                }else{
+                    entity.setOrderDetailId(entity.getOrderDetailId()+","+orderDetail.getId());
+                }
             }
             orderDao.updateOrderByAddDish(order);
         }else{
@@ -73,17 +77,24 @@ public class OrderHomeService {
             order.setOrderNum(DateUtil.format(new Date(),"yyyyMMddHHmmssSSS"));
             // 保存订单数据
             orderDao.save(order);
+            String orderDetailId = "";
             // 保存订单明细数据
             for(OrderDetail orderDetail:orderDetailList){
                 orderDetail.setOrderId(order.getId());
                 orderDetail.setType("1");
                 orderDetailDao.save(orderDetail);
+                if(orderDetailId.equals("")){
+                    orderDetailId = orderDetail.getId()+"";
+                }else{
+                    orderDetailId = orderDetailId + "," +orderDetail.getId();
+                }
             }
             // 更新订单数据到餐桌表
             entity.setOrderId(order.getId());
             diningTableDao.updateDiningTableOrder(entity);
+            entity.setOrderDetailId(orderDetailId);
         }
-        return success;
+        return entity;
     }
 
 
