@@ -48,6 +48,14 @@ public class OrderController extends GenericController<Order, QueryOrder> {
 			orderDetail.setId(Integer.parseInt(orderDetailId));
 			orderDetailList.add(orderDetailService.get(orderDetail));
 		}
+		if(orderDetailList.size()>0){
+			if(orderDetailList.get(0).getType().equalsIgnoreCase(OrderDetail.TYPE_ADD)){
+				model.addAttribute("type","加菜");
+			}else{
+				model.addAttribute("type","点餐");
+			}
+		}
+		model.addAttribute("privateRoom",order.getPrivateRoom());
 		model.addAttribute("data",orderDetailList);
 		model.addAttribute("order",order);
 		model.addAttribute("date", DateUtil.format(new Date(),"yyyy-MM-dd HH:mm:ss"));

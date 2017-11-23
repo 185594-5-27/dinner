@@ -1,11 +1,11 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="include/includebase"></head>
 <body style="text-align: center;">
-<div style="width: 217px;margin-left: -20px;margin: auto;">
+<div style="width: 200px;margin: auto;">
     <table style="font-size: 14px;min-height: 200px;font-weight:bold;">
         <tr style="height: 50px;">
             <td colspan="2">
-                楼中楼餐厅-福寿阁菜单
+                楼中楼订单明细
             </td>
         </tr>
         <tr style="height: 50px;">
@@ -23,10 +23,20 @@
             </td>
         </tr>
         <tr style="height: 50px;">
-            <td colspan="2" th:text='${"下单时间："+date}'></td>
+            <td>下单时间：</td>
+            <td style="font-size: 8px;" th:text='${date}'></td>
         </tr>
         <tr style="height: 50px;">
-            <td colspan="2" th:text='${"下单人员："+order.orderUser}'></td>
+            <td>下单人员：</td>
+            <td colspan="2" th:text='${order.orderUser}'></td>
+        </tr>
+        <tr style="height: 50px;">
+            <td>包间名字：</td>
+            <td colspan="2" th:text='${order.privateRoom}'></td>
+        </tr>
+        <tr style="height: 50px;">
+            <td>订单类型：</td>
+            <td colspan="2" th:text='${type}'></td>
         </tr>
         <tr style="height: 50px;">
             <td colspan="2">
@@ -52,7 +62,8 @@
 </div>
 <script th:inline="javascript">
     $(function () {
-       // window.print();
+        window.print();
+        window.close();
     });
 </script>
 </body>

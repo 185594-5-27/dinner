@@ -16,6 +16,11 @@ public class OrderDetail {
 	// 明细撤单
 	public static final String STATE_CANCEL = "2";
 
+	// 正常下单
+	public static final String TYPE_NORMAL = "1";
+	// 加菜
+	public static final String TYPE_ADD = "2";
+
 	public OrderDetail(){
 		super();
 	}
