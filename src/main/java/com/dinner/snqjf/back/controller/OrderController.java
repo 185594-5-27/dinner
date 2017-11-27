@@ -39,6 +39,31 @@ public class OrderController extends GenericController<Order, QueryOrder> {
 		return orderService;
 	}
 
+	/**
+	 * 功能描述：根据订单信息来跳转到菜单打印页面实现打印功能
+	 * @param entity
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/toOrderDetailPrintByOrder",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	public String toOrderDetailPrintByOrder(Order entity,Model model) throws Exception {
+		Order order = orderService.get(entity);
+		model.addAttribute("privateRoom",order.getPrivateRoom());
+		model.addAttribute("data",orderDetailService.getOrderDetailByOrderId(new OrderDetail(order.getId())));
+		model.addAttribute("order",order);
+		model.addAttribute("date", DateUtil.format(order.getOrderTime(),"yyyy-MM-dd HH:mm:ss"));
+		model.addAttribute("type","菜单补打");
+		return getPageBaseRoot()+"/orderDetailPrint";
+	}
+
+	/**
+	 * 功能描述：跳转到菜单打印页面
+	 * @param entity
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value = "/toOrderDetailPrint",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
 	public String toOrderDetailPrint(DiningTable entity, Model model) throws Exception {
 		Order order = orderService.get(new Order(entity.getOrderId()));

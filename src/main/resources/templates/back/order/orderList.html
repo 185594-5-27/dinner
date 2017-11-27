@@ -113,7 +113,19 @@
 							}
 						});
 					}
-				}
+				},
+                {
+                    text: '打印订单',
+                    iconCls: 'fa fa-print',
+                    handler: function () {
+                        var rows = $('#order-table').bootstrapTable('getSelections');
+                        if(rows.length==0){
+                            window.Ewin.alert({message:'请选择一条需要打印的订单的数据!'});
+                            return false;
+                        }
+                        window.open("/order/toOrderDetailPrintByOrder?id="+rows[0].id);
+                    }
+                }
 			],
 			columns: [
 				{
