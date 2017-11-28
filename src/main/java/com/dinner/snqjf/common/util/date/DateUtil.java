@@ -1,6 +1,7 @@
 package com.dinner.snqjf.common.util.date;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /*
 * 类描述：
@@ -23,6 +24,19 @@ public class DateUtil {
             pattern = "yyyy-MM-dd HH:mm:ss";
         }
         return new java.text.SimpleDateFormat(pattern).format(date);
+    }
+
+    /**
+     * 功能描述：实现日期的加减
+     * @param date
+     * @param day
+     * @return
+     */
+    public static Date addDay(Date date,int day){
+        GregorianCalendar calendar=new GregorianCalendar();
+        calendar.setTime(date);
+        calendar.add(GregorianCalendar.DATE, day);
+        return calendar.getTime();
     }
 
 

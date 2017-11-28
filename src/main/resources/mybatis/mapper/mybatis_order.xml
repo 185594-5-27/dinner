@@ -20,6 +20,16 @@
 		<result property="consumeUserPhone" column="consume_user_phone"/>
 	</resultMap>
 
+	<!-- 查询最近一段时间的收入 -->
+	<select id="sumRecentlyIncome" resultType="java.lang.Double">
+        select case when sum(t.real_income) is null then 0 else sum(t.real_income) end from t_order t where t.order_time >=date_add(NOW(),interval -30 day) and state = 2
+	</select>
+
+	<!-- 根据时间来获取相应的时间的当日收入 -->
+	<select id="sumDayIncome" parameterType="java.lang.String" resultType="java.lang.Double">
+		select case when sum(t.real_income) is null then 0 else sum(t.real_income) end from t_order t where DATE_FORMAT(t.order_time,'%Y-%m-%d')  = str_to_date(#{orderTime},'%Y-%m-%d') and state = 2
+	</select>
+
 	<!-- 更新订单消费金额 -->
 	<update id="updateOrderByAddDish" parameterType="com.dinner.snqjf.back.entity.Order">
 		update t_order set order_price = #{orderPrice} where id = #{id}

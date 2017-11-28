@@ -44,6 +44,23 @@ public class OrderService extends GenericService<Order, QueryOrder> {
 	}
 
 	/**
+	 * 功能描述：实现统计最近一个月内的收入
+	 * @return
+	 */
+	public double sumRecentlyIncome(){
+		return orderDao.sumRecentlyIncome();
+	}
+
+	 /**
+	 * 功能描述：根据时间来获取相应的时间的当日收入
+	 * @param orderTime
+	 * @return
+	 */
+	 public double sumDayIncome(String orderTime){
+		return orderDao.sumDayIncome(orderTime);
+	}
+
+	/**
 	 * 功能描述：实现结账功能
 	 * @param entity
 	 * @return
