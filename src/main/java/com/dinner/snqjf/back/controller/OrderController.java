@@ -43,6 +43,20 @@ public class OrderController extends GenericController<Order, QueryOrder> {
 	 * 功能描述：获取首页第一栏的所有数据
 	 * @return
 	 */
+	@RequestMapping(value = "/sumIncomeComposition",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public  Map<String,Object> sumIncomeComposition(){
+		Map<String,Object> result = new HashMap<String, Object>();
+		result.put("incomeComposition",orderService.sumIncomeComposition());
+		result.put("startDate",DateUtil.format(DateUtil.addDay(new Date(),-30),"yyyy-MM-dd"));
+		result.put("endDate",DateUtil.format(new Date(),"yyyy-MM-dd"));
+		return result;
+	}
+
+	/**
+	 * 功能描述：获取首页第一栏的所有数据
+	 * @return
+	 */
 	@RequestMapping(value = "/getIncomeCollection",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public  Map<String,Object> getIncomeCollection(){

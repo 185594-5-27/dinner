@@ -57,9 +57,10 @@
        $(function () {
            initIncome();
            recentlyIncome();
-           incomeComposition();
+           initIncomeComposition();
        });
 
+       // 初始化收入信息
        function initIncome(){
           $.post("/order/getIncomeCollection",function(data){
               $("#yesterday").html("<h3>昨日收入:"+data.yesterday+"</h3>");
@@ -68,13 +69,35 @@
           })
        }
 
+       // 初始化最近一个月的收入构成
+       function initIncomeComposition(){
+           $.post("/order/sumIncomeComposition",function(data){
+               var legend_data = "[";
+               var series_data = "[";
+               var subtext = data.startDate + "到" + data.endDate;
+               var data = data.incomeComposition;
+               for(var i=0;i<data.length;i++){
+                   if(i==0){
+                       legend_data = legend_data + "\""+data[i].note+"\"";
+                       series_data = series_data + "{\"value\":\""+ data[i].orderPrice+"\",\"name\":\""+data[i].note+"\"}";
+                   }else{
+                       legend_data = legend_data + ",\"" + data[i].note +"\"";
+                       series_data = series_data + ",{\"value\":\""+ data[i].orderPrice+"\",\"name\":\""+data[i].note+"\"}";
+                   }
+               }
+               legend_data = legend_data + "]";
+               series_data = series_data + "]";
+               incomeComposition(eval("("+legend_data+")"),eval("("+series_data+")"),subtext);
+           })
+       }
+
        // 最近一个月的收入构成
-       function incomeComposition() {
+       function incomeComposition(legend_data,series_data,subtext) {
            var income_composition = echarts.init(document.getElementById('income_composition'));
            option = {
                title : {
                    text: '收入构成',
-                   subtext: '2017-11-01到2017-11-28',
+                   subtext: subtext,
                    x:'center'
                },
                tooltip : {
@@ -84,21 +107,15 @@
                legend: {
                    orient: 'vertical',
                    left: 'left',
-                   data: ['肉品','水产','蔬菜','干粮杂货','糕点']
+                   data:legend_data
                },
                series : [
                    {
-                       name: '访问来源',
+                       name: '收入来源',
                        type: 'pie',
                        radius : '55%',
                        center: ['50%', '60%'],
-                       data:[
-                           {value:335, name:'肉品'},
-                           {value:310, name:'水产'},
-                           {value:234, name:'蔬菜'},
-                           {value:135, name:'干粮杂货'},
-                           {value:1548, name:'糕点'}
-                       ],
+                       data:series_data,
                        itemStyle: {
                            emphasis: {
                                shadowBlur: 10,

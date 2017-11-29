@@ -5,10 +5,18 @@ import com.dinner.snqjf.common.base.dao.GenericDao;
 import com.dinner.snqjf.back.entity.Order;
 import com.dinner.snqjf.back.entity.QueryOrder;
 
+import java.util.List;
+
 /**
  *@author linzf
  **/
 public interface OrderDao extends GenericDao<Order, QueryOrder> {
+
+    /**
+     * 功能描述：统计收入构成
+     * @return
+     */
+    List<Order> sumIncomeComposition();
 
     /**
      * 功能描述：实现统计最近一个月内的收入

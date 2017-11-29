@@ -20,6 +20,12 @@
 		<result property="consumeUserPhone" column="consume_user_phone"/>
 	</resultMap>
 
+	<!-- 统计收入构成 -->
+	<select id="sumIncomeComposition" resultMap="OrderMap">
+          select case when tod.is_preferential = '1' then sum(tod.preferential_price) else sum(tod.price) end as order_price ,tod.good_type_name as note from t_order_detail tod left join t_order t on tod.order_id = t.id
+          where t.state = 2 and t.order_time >=date_add(NOW(),interval -30 day) and tod.type != '3' group by tod.good_type_name;
+	</select>
+
 	<!-- 查询最近一段时间的收入 -->
 	<select id="sumRecentlyIncome" resultType="java.lang.Double">
         select case when sum(t.real_income) is null then 0 else sum(t.real_income) end from t_order t where t.order_time >=date_add(NOW(),interval -30 day) and state = 2

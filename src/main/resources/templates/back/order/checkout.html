@@ -3,6 +3,7 @@
 <form id="checkoutForm" role="form" method="post" action="order/checkout">
     <input type="hidden" name="id" th:value="${entity.id}"/>
     <input type="hidden" name="orderNum" th:value="${entity.orderNum}"/>
+    <input type="hidden" name="orderPrice" th:value="${entity.orderPrice}"/>
     <div class="form-group">
         <label>桌号:</label>
         <label style="font-size: 18px;color: red;" th:text="${entity.tableNum}"></label>

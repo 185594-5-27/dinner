@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -61,11 +62,20 @@ public class OrderService extends GenericService<Order, QueryOrder> {
 	}
 
 	/**
+	 * 功能描述：统计收入构成
+	 * @return
+	 */
+	public List<Order> sumIncomeComposition(){
+		return orderDao.sumIncomeComposition();
+	}
+
+	/**
 	 * 功能描述：实现结账功能
 	 * @param entity
 	 * @return
 	 */
 	public boolean checkout(Order entity) throws Exception {
+		int dinnerId = 0;
 		entity.setConsumeTime(new Date());
 		entity.setState(Order.STATE_READY_PAY);
 		// 更新餐桌数据
@@ -74,10 +84,11 @@ public class OrderService extends GenericService<Order, QueryOrder> {
 		Map<Integer,Integer> orderMap = new HashMap<Integer,Integer>();
 		// 更新菜单表的销量的数据
         for(OrderDetail orderDetail:orderDetailDao.getOrderDetailByOrderId(new OrderDetail(entity.getId()))){
-           if(orderMap.get(orderDetail.getDinnerId())!=null){
-			   orderMap.put(orderDetail.getDinnerId(),orderDetail.getNum()+orderMap.get(orderDetail.getDinnerId()));
+			dinnerId = orderDetail.getDinnerId();
+           if(orderMap.get(dinnerId)!=null){
+			   orderMap.put(dinnerId,orderDetail.getNum()+orderMap.get(dinnerId));
 		   }else{
-			   orderMap.put(orderDetail.getDinnerId(),orderDetail.getNum());
+			   orderMap.put(dinnerId,orderDetail.getNum());
 		   }
 		}
 		// 更新菜单表的销量数据
@@ -102,6 +113,23 @@ public class OrderService extends GenericService<Order, QueryOrder> {
 				mobileUser.setScore(mobileUser.getScore()+entity.getScore());
 				mobileUserDao.updateUserScore(mobileUser);
 			}
+		}
+		// 表示实际支付金额和订单金额不对等
+		if(!entity.getOrderPrice().equals(entity.getRealIncome())){
+           double price = Double.parseDouble(entity.getRealIncome()) - Double.parseDouble(entity.getOrderPrice());
+			OrderDetail orderDetail = new OrderDetail();
+			orderDetail.setOrderId(entity.getId());
+			orderDetail.setPrice(price+"");
+			orderDetail.setOrderTime(new Date());
+			orderDetail.setPreferentialPrice(price+"");
+			orderDetail.setIsPreferential("1");
+			orderDetail.setState(OrderDetail.STATE_NORMAL);
+			orderDetail.setType(OrderDetail.TYPE_FAVOURABLE);
+			orderDetail.setNum(1);
+			orderDetail.setName("优惠金额");
+			orderDetail.setGoodTypeName("优惠");
+			orderDetail.setDinnerId(dinnerId);
+			orderDetailDao.save(orderDetail);
 		}
 
 		return orderDao.checkout(entity)>0;

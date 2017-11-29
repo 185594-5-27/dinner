@@ -28,7 +28,7 @@
             var total_pay = 0;
             for(var i=0;i<data_info.length;i++){
                 var price = 0;
-                if(data_info[i].state=='1'){
+                if(data_info[i].state=='1'&&data_info[i].type!='3'){
                     if(data_info[i].isPreferential=='1'){
                         price = data_info[i].num * data_info[i].preferentialPrice;
                     }else{

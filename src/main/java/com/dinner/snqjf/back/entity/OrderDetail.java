@@ -20,6 +20,8 @@ public class OrderDetail {
 	public static final String TYPE_NORMAL = "1";
 	// 加菜
 	public static final String TYPE_ADD = "2";
+	// 优惠金额
+	public static final String TYPE_FAVOURABLE = "3";
 
 	public OrderDetail(){
 		super();
