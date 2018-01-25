@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dinner.snqjf.back.dao.UserInfoDao">
+	<resultMap type="com.dinner.snqjf.back.entity.UserInfo" id="UserInfoMap">
+		<id property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="age" column="age"/>
+	</resultMap>
+
+	<!--根据主键获取对象-->
+	<select id="get" parameterType="com.dinner.snqjf.back.entity.UserInfo" resultMap="UserInfoMap">
+		SELECT id,name,age FROM t_user_info 
+		WHERE id=#{id}
+	</select>
+
+	<!--保存-->
+	<insert id="save" parameterType="com.dinner.snqjf.back.entity.UserInfo" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_user_info(name,age)
+		VALUES(#{name},#{age})
+	</insert>
+
+	<!--修改-->
+	<update id="update" parameterType="com.dinner.snqjf.back.entity.UserInfo">
+		UPDATE t_user_info SET name=#{name},age=#{age}
+		WHERE id=#{id}
+	</update>
+
+	<!--删除-->
+	<delete id="delete" parameterType="com.dinner.snqjf.back.entity.UserInfo">
+		 DELETE FROM t_user_info WHERE id=#{id}
+	</delete>
+
+	<!--分页查询-->
+	<select id="findByPage" parameterType="com.dinner.snqjf.back.entity.QueryUserInfo" resultMap="UserInfoMap">
+		SELECT id,name,age FROM t_user_info
+		WHERE 1=1
+		<if test="name!=null and name!='' "  >
+		AND name=#{name}
+		</if>
+		<if test="age!=null and age!='' "  >
+		AND age=#{age}
+		</if>
+		<if test="sort!= null">
+		order by ${sort} ${order}
+		</if>
+		limit #{offset},#{limit}
+	</select>
+
+	<!--统计-->
+	<select id="count" parameterType="com.dinner.snqjf.back.entity.QueryUserInfo" resultType="int">
+		SELECT count(*) FROM t_user_info
+		WHERE 1=1
+		<if test="name!=null and name!='' ">
+		AND name=#{name}
+		</if>
+		<if test="age!=null and age!='' ">
+		AND age=#{age}
+		</if>
+	</select>
+
+	<!--查询-->
+	<select id="query" parameterType="com.dinner.snqjf.back.entity.QueryUserInfo" resultMap="UserInfoMap">
+		SELECT id,name,age FROM t_user_info
+		WHERE 1=1
+		<if test="name!=null and name!='' ">
+		AND name=#{name}
+		</if>
+		<if test="age!=null and age!='' ">
+		AND age=#{age}
+		</if>
+		<if test="sort!= null">
+		order by ${sort} ${order}
+		</if>
+	</select>
+</mapper>
