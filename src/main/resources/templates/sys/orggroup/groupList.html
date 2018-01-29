@@ -10,7 +10,7 @@
         <div class="panel panel-default" style="margin-top: 10px;">
             <div class="panel-heading" id="groupQueryTitle">查询条件</div>
             <div class="panel-body">
-                <form class="form-inline" role="form" style="float: left; width: 100%;margin-left: 20px;" method="post" id="queryGroupUser">
+                <form class="form-inline" role="form" style="float: left; width: 100%;" method="post" id="queryGroupUser">
                     <input type="hidden" id="groupNode" name="orgGroup.node" value="" />
                     <input type="hidden" id="groupParentNode" name="orgGroup.parentNode" value="" />
                     <div class="form-group">
@@ -31,6 +31,9 @@
     var zTree;
     var demoIframe;
     var selectNode;
+
+    // 获取当前窗口的宽度
+    var winWidth = $(window.parent.document).find("#wrapper").width();
 
     function addHoverDom(treeId, treeNode) {
         var sObj = $("#" + treeNode.tId + "_span");
@@ -143,13 +146,15 @@
     });
 
     function doQuery(){
+        // 移除遮罩层的属性否则会导致在移动端无法显示滚动条
+        $('body').removeClass("modal-open");
         $('#group-user-table').bootstrapTable('refresh');    //刷新表格
     }
 
     function initTable(){
         $('#group-user-table').bootstrapTable({
             url:"group/userList",
-            height: $(window.parent.document).find("#wrapper").height() - 252,
+            height:  winWidth<=415?621:$(window.parent.document).find("#wrapper").height() - 252,
             width:$(window).width(),
             showColumns:true,
             formId :"queryGroupUser",
@@ -157,13 +162,14 @@
             sortName : 'id',
             sortOrder : 'desc',
             clickToSelect: true,// 单击某一行的时候选中某一条记录
-            pageSize : 13,
+            pageSize : winWidth<=415?3:13,
+            cardView : winWidth<=415?true:false,// 根据屏幕大小来决定是否试图展示
             toolbars:[
                 {
                     text: '添加',
                     iconCls: 'glyphicon glyphicon-plus',
                     handler: function () {
-                        window.Ewin.dialog({title:"添加",url:"group/addUserPage",gridId:"gridId",width:600,height:745})
+                        window.Ewin.dialog({title:"添加",url:"group/addUserPage",gridId:"gridId",width:winWidth<=415?winWidth-20:600,height:winWidth<=415?745:770})
                     }
                 },
                 {
@@ -175,7 +181,7 @@
                             window.Ewin.alert({message:'请选择一条需要修改的数据!'});
                             return false;
                         }
-                        window.Ewin.dialog({title:"修改",url:"group/updateUserPage?id="+rows[0].id,gridId:"gridId",width:600,height:590});
+                        window.Ewin.dialog({title:"修改",url:"group/updateUserPage?id="+rows[0].id,gridId:"gridId",width:winWidth<=415?winWidth-20:600,height:590});
                     }
                 },
                 {

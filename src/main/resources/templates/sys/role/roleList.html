@@ -26,32 +26,39 @@
 </div>
 <script th:inline="javascript">
 
+    // 获取当前窗口的宽度
+    var winWidth = $(window.parent.document).find("#wrapper").width();
+
     $(function() {
         initTable();
         $('#role-table').bootstrapTable('hideColumn', 'id');
     });
 
     function doQuery(){
+        // 移除遮罩层的属性否则会导致在移动端无法显示滚动条
+        $('body').removeClass("modal-open");
         $('#role-table').bootstrapTable('refresh');    //刷新表格
     }
 
     function initTable(){
         $('#role-table').bootstrapTable({
             url:"role/list",
-            height: $(window.parent.document).find("#wrapper").height() - 252,
+            height:  winWidth<=415?458:$(window.parent.document).find("#wrapper").height() - 252,
             width:$(window).width(),
             showColumns:true,
             formId :"queryRole",
             pagination : true,
             sortName : 'id',
             sortOrder : 'desc',
-            pageSize : 13,
+            clickToSelect: true,// 单击某一行的时候选中某一条记录
+            pageSize : winWidth<=415?3:13,
+            cardView : winWidth<=415?true:false,// 根据屏幕大小来决定是否试图展示
             toolbars:[
                 {
                     text: '添加',
                     iconCls: 'glyphicon glyphicon-plus',
                     handler: function () {
-                        window.Ewin.dialog({title:"添加",url:"role/addPage",width:600,height:310})
+                        window.Ewin.dialog({title:"添加",url:"role/addPage",width:winWidth<=415?winWidth-20:400,height:510})
                     }
                 },
                 {
@@ -63,7 +70,7 @@
                             window.Ewin.alert({message:'请选择一条需要修改的数据!'});
                             return false;
                         }
-                        window.Ewin.dialog({title:"修改",url:"role/updatePage?id="+rows[0].id,width:600,height:310});
+                        window.Ewin.dialog({title:"修改",url:"role/updatePage?id="+rows[0].id,width:winWidth<=415?winWidth-20:400,height:510});
                     }
                 },
                 {

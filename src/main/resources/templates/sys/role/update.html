@@ -13,16 +13,21 @@
                 <label for="roleName">权限名称:</label>
                 <input type="text" class="form-control" name="roleName" id="roleName" th:value="${entity.roleName}"  placeholder="请输入权限名称" />
             </div>
-        </div>
-        <div class="col-md-5" style="margin-top: 10px;">
-            <input type="hidden" id="treeArray" name="treeArray" />
-            <ul id="roleZtree" class="ztree" style="width:200px; overflow:auto;"></ul>
+            <div class="form-group" >
+                <label for="roleName">菜单权限:</label>
+                <div class="col-md-12" style="margin-top: 10px;">
+                    <input type="hidden" id="treeArray" name="treeArray" />
+                    <ul id="roleZtree" class="ztree" style="width:200px; overflow:auto;"></ul>
+                </div>
+            </div>
         </div>
     </div>
 </form>
 <script th:inline="javascript">
     <![CDATA[
+
     $(function () {
+
         $('#roleForm').bootstrapValidator({
             message: 'This value is not valid',
             feedbackIcons: {
@@ -65,6 +70,7 @@
 
         // 绑定dialog的确定按钮的监听事件
         $("#btnOk",window.top.document).click(function() {
+
             var t = $.fn.zTree.getZTreeObj("roleZtree");
             var nodes = t.getCheckedNodes(true);
             var treeArray = "";

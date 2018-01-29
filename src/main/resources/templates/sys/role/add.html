@@ -3,7 +3,7 @@
 <body>
 <form id="roleForm"  role="form" method="post" action="role/save">
     <div class="row">
-        <div class="col-md-7">
+        <div class="col-md-12">
             <div class="form-group" >
                 <label for="name">权限代码:</label>
                 <input type="text" class="form-control" name="name" id="name"  placeholder="请输入权限代码" />
@@ -12,10 +12,13 @@
                 <label for="roleName">权限名称:</label>
                 <input type="text" class="form-control" name="roleName" id="roleName"  placeholder="请输入权限名称" />
             </div>
-        </div>
-        <div class="col-md-5" style="margin-top: 10px;">
-            <input type="hidden" id="treeArray" name="treeArray" />
-            <ul id="roleZtree" class="ztree" style="width:200px; overflow:auto;"></ul>
+            <div class="form-group" >
+                <label for="roleName">菜单权限:</label>
+                <div class="col-md-12" style="margin-top: 10px;">
+                    <input type="hidden" id="treeArray" name="treeArray" />
+                    <ul id="roleZtree" class="ztree" style="width:200px; overflow:auto;"></ul>
+                </div>
+            </div>
         </div>
     </div>
 </form>
