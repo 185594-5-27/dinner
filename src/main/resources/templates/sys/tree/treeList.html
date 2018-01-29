@@ -12,6 +12,9 @@
     var demoIframe;
     var selectNode;
 
+    // 获取当前窗口的宽度
+    var winWidth = $(window.parent.document).find("#wrapper").width();
+
     function addHoverDom(treeId, treeNode) {
         var sObj = $("#" + treeNode.tId + "_span");
         if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0) return;
@@ -26,7 +29,7 @@
         if (btn) btn.bind("click", function(){
             zTree = $.fn.zTree.getZTreeObj("menu_tree");
             selectNode = treeNode;
-            window.Ewin.dialog({title:"添加",url:"tree/addTreePage?id="+treeNode.id,width:400,height:650})
+            window.Ewin.dialog({title:"添加",url:"tree/addTreePage?id="+treeNode.id,width:winWidth<=415?winWidth-20:400,height:650})
             return false;
         });
         var remove_btn = $("#removeBtn_"+treeNode.tId);
@@ -54,14 +57,14 @@
         if (edit_btn) edit_btn.bind("click", function(){
             zTree = $.fn.zTree.getZTreeObj("menu_tree");
             selectNode = treeNode;
-            window.Ewin.dialog({title:"修改",url:"tree/updateTreePage?id="+treeNode.id,width:400,height:650})
+            window.Ewin.dialog({title:"修改",url:"tree/updateTreePage?id="+treeNode.id,width:winWidth<=415?winWidth-20:400,height:650})
             return false;
         });
         var add_parent_btn = $("#addParentBtn_"+treeNode.tId);
         if (add_parent_btn) add_parent_btn.bind("click", function(){
             zTree = $.fn.zTree.getZTreeObj("menu_tree");
             selectNode = null;
-            window.Ewin.dialog({title:"添加",url:"tree/addTreePage",width:400,height:650})
+            window.Ewin.dialog({title:"添加",url:"tree/addTreePage",width:winWidth<=415?winWidth-20:400,height:650})
             return false;
         })
     };
